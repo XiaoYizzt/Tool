@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../css/t1.css" media="screen" />
+<title>计算辐射计（盖革计数器）测量值平均值的工具</title>
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script language="javascript" type="text/javascript" src="jquery-1.5.2.min.js"></script>
+  <script src="js/jquery.cookie.js"></script>
+  <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="flot/excanvas.min.js"></script><![endif]-->
+  <script language="javascript" type="text/javascript" src="flot/jquery.flot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="flot/jquery.flot.fillbetween.min.js"></script>
+<script src="js/jquery.socialbutton-1.9.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22952947-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script language="javascript" type="text/javascript" src="js/tdistdata.js"></script>
+<script type="text/javascript">
+var last_update_time = 0;
+var last_check_time = 0;
+var unit_str = ["", "μSv/h", "mSv/h", "nSv/h", "mR/h", "μR/h", "cpm", "cps"];
+
+$(document).ready(function() {
+	$("#twitter_post").bind("click", function() {
+		twitter();
+	});
+	$("#value").keydown(function(e) {
+		if(e.which == 13) {
+			graph_update();
+		}
+		return true;
+	});
+	
+	// cookie
+	$("#detector_name").bind("change", function() {
+		$.cookie('radiation_calc_detector_name', $("#detector_name").val(), { expires: 90, path: '/' });
+	});
+	$("input[name='hashtag']").bind("change", function() {
+		var hashtag = $("input[name='hashtag']:checked").map( function() {
+			return $(this).val();
+		}).get().join(" ");
+		$.cookie('radiation_calc_hashtag', hashtag, { expires: 90, path: '/' });
+	});
+	
+	var detector_name = $.cookie('radiation_calc_detector_name');
+	if(detector_name != null) {
+		$("#detector_name").val(detector_name);
+	}
+	var hashtag = $.cookie('radiation_calc_hashtag');
+	if(hashtag != null) {
+		$("input[name='hashtag']").val(hashtag.split(/ /));
+	}
+	
+	// setup...
+	setup_update_timer();
+	restore_hash();
+});
+
+function setup_update_timer() {
+	last_check_time = get_current_second();
+	last_update_time = last_check_time;
+	setInterval(update_timer, 100);
+}
+
+function reset_update_timer() {
+	last_check_time = get_current_second();
+	last_update_time = last_check_time;
+	$("#timer").text("0:00");
+}
+
+function update_timer() {
+	var now_time = get_current_second();
+	if(last_check_time != now_time) {
+		last_check_time = now_time;
+		
+		var elapse = last_check_time - last_update_time;
+		
+		$("#timer").text(format_time(elapse));
+	}
+}
+
+function get_current_second() {
+	return Math.floor((new Date()).getTime() / 1000);
+}
+
+function format_time(second) {
+	var min = Math.floor(second / 60);
+	var sec = second % 60;
+	
+	return min + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function restore_hash() {
+	if(location.hash != "") {
+		if(location.hash.match(/^#([0-9]+)_([0-9]+)_([0-9\.]+)__([0-9\._]+)$/)) {
+			var unit = RegExp.$1;
+			var result_unit = RegExp.$2;
+			var cpm = RegExp.$3;
+			var values = RegExp.$4;
+			$("#unit").val(unit);
+			$("#result_unit").val(result_unit);
+			$("#cpm").val(cpm);
+			
+			$("#value").text(values.replace(/_/g, "\n") + "\n");
+			
+		}
+		graph_update();
+		scroll_result();
+	} else {
+		graph_update();
+	}
+}
+function scroll_result() {
+	var targetOffset = $('#result').offset().top;
+	$('html,body').animate({scrollTop: targetOffset}, 500);
+}
+
+function graph_update() {
+	var values = $("#value").val().split("\n");
+	
+	var unit_conv = unit_value($("#unit").val()) / unit_value($("#result_unit").val());
+	
+	var rad_values = [];
+	var rad_graph = [];
+	var all_max;
+	var all_min;
+	
+	var data_index = 0;
+	var value_string = "";
+	var error = "";
+	for(var i = 0; i < values.length; i++) {
+		if(values[i] != "") {
+			var val = parseFloat(convert_ztoh(values[i]));
+			if(!isNaN(val)) {
+				value_string += "_" + convert_ztoh(values[i]);
+				val *= unit_conv;
+				rad_values.push(val);
+				oldvalues = values;
+				
+				if(all_max == undefined || all_max < val) {
+					all_max = val;
+				}
+				if(all_min == undefined || all_min > val) {
+					all_min = val;
+				}
+			} else {
+				error += (i + 1) + "行解析错误: " + values[i] + "<br>";
+			}
+		}
+	}
+	$("#error").html(error);
+	$("#value").attr("rows", values.length + 2);
+	
+	reset_update_timer();
+	
+	for(var i = 0; i < rad_values.length; i++) {
+		rad_graph.push([i + 1, rad_values[i]]);
+	}
+	
+	
+	var sum_x = 0;
+	var sum = 0;
+	var avg_x = 0;
+	var avg = 0;
+	var rad_graph_low = [];
+	var rad_graph_avg_low = [];
+	var rad_graph_avg = [];
+	var rad_graph_avg_high = [];
+	var rad_graph_high = [];
+	for(var i = 0; i < rad_values.length; i++) {
+		sum_x += i + 1;
+		sum += rad_values[i];
+		
+		avg_x = sum_x / (i + 1);
+		avg = sum / (i + 1);
+		
+		var sum2_x = 0;
+		var sum2 = 0;
+		var sum2_xy = 0;
+		for(var ii = 0; ii <= i; ii++) {
+			sum2_x += Math.pow((ii + 1) - avg_x, 2);
+			sum2 += Math.pow(rad_values[ii] - avg, 2);
+			sum2_xy += ((ii + 1) - avg_x) * (rad_values[ii] - avg);
+		}
+		
+		var stddev = 0;
+		var uncertainty = 0;
+		if(i > 0) {
+			stddev = Math.sqrt(sum2 / i);  // 实验标准偏差
+			uncertainty = stddev / Math.sqrt(i + 1);
+		}
+		
+		var t95 = 1;
+		if(i >= 1) {
+			t95 = tdist(i, 5);
+		}
+		rad_graph_low.push([i + 1, avg - stddev * t95]);
+		rad_graph_avg_low.push([i + 1, avg - uncertainty * t95]);
+		rad_graph_avg.push([i + 1, avg]);
+		rad_graph_avg_high.push([i + 1, avg + uncertainty * t95]);
+		rad_graph_high.push([i + 1, avg + stddev * t95]);
+	}
+	var stddev = 0;
+	var uncertainty = 0;
+	if(rad_values.length > 1) {
+		var sum2_x = 0;
+		var sum2 = 0;
+		var sum2_xy = 0;
+		for(var ii = 0; ii < rad_values.length; ii++) {
+			sum2_x += Math.pow((ii + 1) - avg_x, 2);
+			sum2 += Math.pow(rad_values[ii] - avg, 2);
+			sum2_xy += ((ii + 1) - avg_x) * (rad_values[ii] - avg);
+		}
+		stddev = Math.sqrt(sum2 / (rad_values.length - 1));
+		uncertainty = stddev / Math.sqrt(rad_values.length);
+	}
+	
+	var param_a = avg;
+	var param_b = 0;
+	if(rad_values.length > 1) {
+		param_a = (sum2_xy / (rad_values.length - 1)) / (sum2_x / (rad_values.length - 1));
+		param_b = avg - param_a * avg_x;
+	};
+	
+	var sort_values = rad_values.sort(function(a,b) {return a-b;});
+//	var mean;
+//	if(rad_values.length % 2 == 0) {
+//		mean = (sort_values[Math.floor(rad_values.length / 2) - 1]
+//				+ sort_values[Math.floor(rad_values.length / 2)]) / 2;
+//	} else {
+//		mean = sort_values[Math.floor(rad_values.length / 2)];
+//	}
+	
+	var unit = unit_str[parseInt($("#result_unit").val())];
+	$("#total_avg").html(avg.toFixed(3) + unit);
+//	$("#total_mean").text(mean.toFixed(3) + unit);
+	$("#total_count").text(rad_values.length.toFixed(0));
+	if(rad_values.length < 2) {
+		$("#total_error").html("(数据量不足)");
+		$("#total_error99").html("(数据量不足)");
+		$("#total_error9973").html("(数据量不足)");
+		$("#total_stddev").text("(数据量不足)");
+		$("#total_uncertainty").text("(数据量不足)");
+	} else {
+		$("#total_stddev").text(stddev.toFixed(3) + unit);
+		$("#total_uncertainty").text(uncertainty.toFixed(3) + unit);
+		
+		var t95 = tdist(rad_values.length - 1, 5);
+		var per = (uncertainty * t95) / avg * 100;
+		$("#total_error").html(avg.toFixed(3)
+			+ " ± " + (uncertainty * t95).toFixed(3) + unit
+			+ "<br>(±" + per.toFixed(1) + "%)");
+		
+		var t99 = tdist(rad_values.length - 1, 1);
+		var per = (uncertainty * t99) / avg * 100;
+		$("#total_error99").html(avg.toFixed(3)
+			+ " ± " + (uncertainty * t99).toFixed(3) + unit
+			+ "<br>(±" + per.toFixed(1) + "%)");
+		
+		var t9973 = tdist(rad_values.length - 1, 0.27);
+		var per = (uncertainty * t9973) / avg * 100;
+		$("#total_error9973").html(avg.toFixed(3)
+			+ " ± " + (uncertainty * t9973).toFixed(3) + unit
+			+ "<br>(±" + per.toFixed(1) + "%)");
+		
+	}
+	
+	var href = location.href.replace(/#.*$/, "");
+	var hash = $("#unit").val() + "_"
+		+ $("#result_unit").val() + "_"
+		+ $("#cpm").val() + "_"
+		+ value_string;
+	$("#link_url").attr("href", href + "#" + hash);
+	$("#link_url").text(href + "#" + hash);
+	
+	$.plot($("#placeholder"), [
+		{
+			data: rad_graph,
+			label: unit_str[parseInt($("#result_unit").val())],
+			lines: { show: false },
+			points: { show: true, fill: true },
+			color: "rgb(255,50,50)"
+		},
+		{
+			id: 'low',
+			data: rad_graph_low,
+			lines: { show: true, lineWidth: 0, fill: false },
+			color: "rgb(20,50,255)"
+		},
+		{
+			id: 'avg_low',
+			data: rad_graph_avg_low,
+			lines: { show: true, lineWidth: 0, fill: 0.1 },
+			fillBetween: 'low',
+			color: "rgb(20,50,255)"
+		},
+		{
+			id: 'avg',
+			data: rad_graph_avg,
+			lines: { show: true, lineWidth: 2, fill: 0.2, shadowSize: 0 },
+			fillBetween: 'avg_low',
+			color: "rgb(20,50,255)"
+		},
+		{
+			id: 'avg_high',
+			data: rad_graph_avg_high,
+			lines: { show: true, lineWidth: 0, fill: 0.2 },
+			fillBetween: 'avg',
+			color: "rgb(20,50,255)"
+		},
+		{
+			id: 'high',
+			data: rad_graph_high,
+			lines: { show: true, lineWidth: 0, fill: 0.1 },
+			fillBetween: 'avg_high',
+			color: "rgb(20,50,255)"
+		},
+		{
+		data: [[1, param_a * 1 + param_b], [rad_values.length, param_a * rad_values.length + param_b]],
+		lines: { show: true },
+		color: "rgb(100,255,50)"
+		}
+	], {
+		xaxis: { show: false },
+		yaxis: {
+			min: (all_min ? (all_min - (stddev ? stddev*2 : 0)) * 0.9 : 0),
+			max: (all_max ? (all_max + (stddev ? stddev*2 : 0)) * 1.1 : 0)
+		}
+	});
+}
+
+function unit_value(unit) {
+	if(unit == "1") {
+		return 1;
+	} else if(unit == "2") {
+		return 1000;
+	} else if(unit == "3") {
+		return 0.001;
+	} else if(unit == "4") {
+		return 10;
+	} else if(unit == "5") {
+		return 0.01;
+	} else if(unit == "6") {
+		var cpm = parseFloat($("#cpm").val());
+		return 1/cpm;
+	} else if(unit == "7") {
+		var cpm = parseFloat($("#cpm").val());
+		return 60/cpm;
+	} else {
+		alert("internal error");
+	}
+}
+
+function twitter() {
+	
+	var width = 550;
+	var height = 420;
+	
+	var left = Math.round((screen.width / 2) - (width / 2));
+	var top = 0;
+	if(screen.height > height) {
+		top = Math.round((screen.height / 2) - (height / 2));
+	}
+	
+	var text = '';
+	
+	var total_error = $("#total_error").html();
+	total_error = total_error.replace(/<br>/i, "");
+	total_error = total_error.replace(/\(数据量不足\)/g, "");
+	total_error = total_error.replace(/ /g, "");
+	if(total_error == "") {
+		total_error = $("#total_avg").text();
+	}
+	text += total_error + ' (95%置信区间)(' + $("#total_count").text() + '时间平均) '
+	
+	if($("#detector_name").val() != "") {
+		text += $("#detector_name").val() + ' ';
+	}
+	if($("#place").val() != "") {
+		text += $("#place").val() + ' ';
+	}
+	if($("input[name='level']:checked").val() != "") {
+		text += $("input[name='level']:checked").val() + ' ';
+	}
+	if($("input[name='ground']:checked").val() != "") {
+		text += $("input[name='ground']:checked").val() + ' ';
+	}
+	if($("input[name='height']:checked").val() != "") {
+		text += '高度' + $("input[name='height']:checked").val() + ' ';
+	}
+	if($("input[name='hashtag']:checked").val() != "") {
+		text += $("input[name='hashtag']:checked").map( function() {
+			return $(this).val();
+		}).get().join(" ") + ' ';
+	}
+	
+	if($("input[name='pagelink']:checked").val() == "1") {
+		href += '&url=' + encodeURIComponent($("#link_url").text());
+	}
+	
+	var windowOptions = 'scrollbars=yes,resizable=yes,toolbar=no,location=yes';
+	
+	window.open(href, 'intent', windowOptions + ',width=' + width + ',height=' + height + ',left=' + left + ',top=' + top);
+	
+	return false;
+}
+
+function convert_ztoh(str) {
+	str = str.replace(/ー/g, "-");
+	str = str.replace(/－/g, "-");
+	str = str.replace(/０/g, "0");
+	str = str.replace(/１/g, "1");
+	str = str.replace(/２/g, "2");
+	str = str.replace(/３/g, "3");
+	str = str.replace(/４/g, "4");
+	str = str.replace(/５/g, "5");
+	str = str.replace(/６/g, "6");
+	str = str.replace(/７/g, "7");
+	str = str.replace(/８/g, "8");
+	str = str.replace(/９/g, "9");
+	str = str.replace(/，/g, "");
+	str = str.replace(/,/g, "");
+	str = str.replace(/、/g, ".");
+	str = str.replace(/．/g, ".");
+	return str;
+}
+
+</script>
+	
+</head>
+<a href="index.html " title=" *描述文本* " style="font-size:32px;<!-- 用来设置超链接文本大小 -->">返回关于辐射及辐射测量仪器相关</a> <hr />
+
+	
+
+<div style="float: left;">
+<div id="placeholder" style="width: 500px; height: 300px;"></div>
+<br>
+<table class="csv" style="width: 420px; margin: 0 40px;">
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			平均值	
+		</td>
+		<td colspan="1" style="text-align: right; background-color: #fff8ff;">
+			<span id="total_avg"></span>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			输入值的数量	
+		</td>
+		<td colspan="1" style="text-align: right;">
+			<span id="total_count"></span>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			实验标准偏差<br>
+			（测量值的分散）	
+		</td>
+		<td colspan="1" style="text-align: right;">
+			<span id="total_stddev"></span>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			均值的实验标准差<br>
+			（均值的分布）
+		</td>
+		<td colspan="1" style="text-align: right;">
+			<span id="total_uncertainty"></span><br>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			估计平均值<br>
+			（95% 置信区间）
+		</td>
+		<td colspan="1" style="text-align: right; background-color: #fff8ff;">
+			<span id="total_error"></span>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			估计平均值<br>
+			（99% 置信区间）
+		</td>
+		<td colspan="1" style="text-align: right;">
+			<span id="total_error99"></span>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			估计平均值<br>
+			（99.73% 置信区间）
+		</td>
+		<td colspan="1" style="text-align: right;">
+			<span id="total_error9973"></span>
+		</td>
+	</tr>
+</table>
+</div>
+
+<div style="margin: 0 0 0 20px; width: 200px; float: left;">
+<p>
+	<form action="#" onsubmit="graph_update(); return false;">
+	<table class="csv">
+		<tr>
+			<th nowrap>
+				测量结果<br>
+				
+			</th>
+			<td>
+				<span id="error" style="color: #f00; font-weight: bold;"></span>
+				<textarea id="value" rows="15" cols="7">
+</textarea>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				定时器
+			</th>
+			<td>
+				<span id="timer">0:00</span>
+			</td>
+		</tr>
+		<tr>
+			<th>输入单位</th>
+			<td>
+				<select id="unit">
+					<option value="1" selected>μSv/h
+					<option value="2">mSv/h
+					<option value="3">nSv/h
+					<option value="4">mR/h
+					<option value="5">μR/h
+					<option value="6">cpm
+					<option value="7">cps
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>显示单元</th>
+			<td>
+				<select id="result_unit">
+					<option value="1" selected>μSv/h
+					<option value="2">mSv/h
+					<option value="3">nSv/h
+					<option value="4">mR/h
+					<option value="5">μR/h
+					<option value="6">cpm
+					<option value="7">cps
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>cpm设定</th>
+			<td>
+				<input type="text" id="cpm" value="100" size="4">cpm/μSv/h
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: center;">
+				<input type="submit" value="更新图表">
+			</td>
+		</tr>
+	</table>
+	
+	</form>
+</p>
+</div>
+
+<div style="clear: left;">
+	
+	
+	<p id="result_url" style="font-size: 0.8em;">
+		<br>
+		此结果的 URL：<a class="update_link" id="link_url" href="#"></a><br>
+	</p>
+	
+	
+
+ <body background="img/bg1.gif">
+ 
+
+
+
+</body>
+</html>
+
+

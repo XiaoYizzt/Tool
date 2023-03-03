@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../css/t1.css" media="screen" />
+<title>β射线射程计算工具</title>
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <script src="jquery-1.5.2.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+<script src="js/jquery.socialbutton-1.9.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	
+	  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22952947-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script type="text/javascript">
+var column_max = 3;
+$(document).ready(function() {
+	calc();
+});
+function calc() {
+	var max_density = 5;
+	var raylist = [
+					"sr90_1", "y90_1",
+					"i131_1", "i131_2", "i131_3",
+					"cs134_1", "cs134_2", "cs134_3",
+					"cs137_1", "cs137_2",
+					"ev_1", "ev_2", "ev_3", "ev_4", "ev_5", "ev_6"];
+	for(var ray_index in raylist) {
+		var ray = raylist[ray_index];
+		var ev = parseFloat($("#" + ray).text());
+		if(isNaN(ev)) {
+			ev = parseFloat($("#" + ray).val());
+		}
+		for(var d = 1; d <= max_density; d++) {
+			var density = parseFloat($("#density_" + d).text()) * 1000;
+			if(isNaN(density)) {
+				density = parseFloat($("#density_" + d).val()) * 1000;
+			}
+			var range = calc_range(ev, density);
+			$("#" + ray + "_" + d).text(range.toFixed(3));
+		}
+	}
+}
+function calc_range(ev, density) {
+	// return: mg/cm^2
+	if(ev > 0.8) {
+		return (542 * ev - 133) / density;
+	} else {
+		return (407 * Math.pow(ev, 1.38)) / density;
+	}
+}
+
+</script>
+</head>
+	
+<a href="index.html " title=" *描述文本* " style="font-size:32px;<!-- 用来设置超链接文本大小 -->">返回关于辐射及辐射测量仪器相关</a> <hr />
+
+	
+<p>
+	计算β射线的射程（最大可达距离）。<br>
+	<br>
+	<ul>
+		<li>非铝的数字并不准确，因为它们是以铝中范围为基础的密度比。</li>
+		<li>在空气中，计算是基于1个大气压和20摄氏度时的密度。</li>
+		<li>β射线的能量是最大能量。<br>
+			β射线发出各种能量的辐射，其中的最大值是给定的。因此，该范围也是最大值。</li>
+		<li>在文本框中输入密度和能量，然后按重新计算按钮以任意数值计算。</li>
+	</ul>
+</p>
+
+<p>
+	<form action="#" onsubmit="calc(); return false;">
+	
+	<table class="csv" id="result_table">
+	<tr>
+		<th rowspan="2">放射性核素</th>
+		<th rowspan="2">半衰期</th>
+		<th rowspan="2">能量 (MeV)</th>
+		<th rowspan="2">占比</th>
+		<th colspan="5">最大射程</th>
+	</tr>
+	<tr>
+		<th>铝中<br>
+			<span id="density_1">2.70</span> g/cm<sup>3</sup></th>
+		<th>空气中<br>
+			<span id="density_2">0.001205</span> g/cm<sup>3</sup></th>
+		<th>水中<br>
+			<span id="density_3">1</span> g/cm<sup>3</sup></th>
+		<th>混凝土中<br>
+			<span id="density_4">2.8</span> g/cm<sup>3</sup></th>
+		<th>自定义密度<br>
+			<input id="density_5" value="1.0" size="5"> g/cm<sup>3</sup></th>
+	</tr>
+	<tr>
+		<th rowspan="1">Sr90 锶</th>
+		<th rowspan="1">28.79年</th>
+		<th style="text-align: right;"><span id="sr90_1">0.546</span></th>
+		<th style="text-align: right;">100%</th>
+		<td style="text-align: right;"><span id="sr90_1_1"></span>cm</td>
+		<td style="text-align: right;"><span id="sr90_1_2"></span>cm</td>
+		<td style="text-align: right;"><span id="sr90_1_3"></span>cm</td>
+		<td style="text-align: right;"><span id="sr90_1_4"></span>cm</td>
+		<td style="text-align: right;"><span id="sr90_1_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th rowspan="1">Y90 钇<br>
+						（Sr90 的子核素）</th>
+		<th rowspan="1">64.00小时</th>
+		<th style="text-align: right;"><span id="y90_1">2.280</span></th>
+		<th style="text-align: right;">100%</th>
+		<td style="text-align: right;"><span id="y90_1_1"></span>cm</td>
+		<td style="text-align: right;"><span id="y90_1_2"></span>cm</td>
+		<td style="text-align: right;"><span id="y90_1_3"></span>cm</td>
+		<td style="text-align: right;"><span id="y90_1_4"></span>cm</td>
+		<td style="text-align: right;"><span id="y90_1_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th rowspan="3">I131 碘</th>
+		<th rowspan="3">8.02070天</th>
+		<th style="text-align: right;"><span id="i131_1">0.248</span></th>
+		<th style="text-align: right;">2.1%</th>
+		<td style="text-align: right;"><span id="i131_1_1"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_1_2"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_1_3"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_1_4"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_1_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;"><span id="i131_2">0.334</span></th>
+		<th style="text-align: right;">7.2%</th>
+		<td style="text-align: right;"><span id="i131_2_1"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_2_2"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_2_3"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_2_4"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_2_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;"><span id="i131_3">0.606</span></th>
+		<th style="text-align: right;">89.5%</th>
+		<td style="text-align: right;"><span id="i131_3_1"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_3_2"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_3_3"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_3_4"></span>cm</td>
+		<td style="text-align: right;"><span id="i131_3_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th rowspan="3">Cs134 铯</th>
+		<th rowspan="3">2.0648年</th>
+		<th style="text-align: right;"><span id="cs134_1">0.0886</span></th>
+		<th style="text-align: right;">27.3%</th>
+		<td style="text-align: right;"><span id="cs134_1_1"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_1_2"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_1_3"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_1_4"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_1_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;"><span id="cs134_2">0.415</span></th>
+		<th style="text-align: right;">2.5%</th>
+		<td style="text-align: right;"><span id="cs134_2_1"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_2_2"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_2_3"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_2_4"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_2_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;"><span id="cs134_3">0.658</span></th>
+		<th style="text-align: right;">70.2%</th>
+		<td style="text-align: right;"><span id="cs134_3_1"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_3_2"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_3_3"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_3_4"></span>cm</td>
+		<td style="text-align: right;"><span id="cs134_3_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th rowspan="2">Cs137 铯</th>
+		<th rowspan="2">30.1671年</th>
+		<th style="text-align: right;"><span id="cs137_1">0.514</span></th>
+		<th style="text-align: right;">94.4%</th>
+		<td style="text-align: right;"><span id="cs137_1_1"></span>cm</td>
+		<td style="text-align: right;"><span id="cs137_1_2"></span>cm</td>
+		<td style="text-align: right;"><span id="cs137_1_3"></span>cm</td>
+		<td style="text-align: right;"><span id="cs137_1_4"></span>cm</td>
+		<td style="text-align: right;"><span id="cs137_1_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;"><span id="cs137_2">1.176</span></th>
+		<th style="text-align: right;">5.6%</th>
+		<td style="text-align: right;"><span id="cs137_2_1"></span>cm</td>
+		<td style="text-align: right;"><span id="cs137_2_2"></span>cm</td>
+		<td style="text-align: right;"><span id="cs137_2_3"></span>cm</td>
+		<td style="text-align: right;"><span id="cs137_2_4"></span>cm</td>
+		<td style="text-align: right;"><span id="cs137_2_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th rowspan="6">按能量</th>
+		<th rowspan="6">－</th>
+		<th style="text-align: right;"><span id="ev_1">0.1</span></th>
+		<th style="text-align: right;">－</th>
+		<td style="text-align: right;"><span id="ev_1_1"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_1_2"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_1_3"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_1_4"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_1_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;"><span id="ev_2">0.5</span></th>
+		<th style="text-align: right;">－</th>
+		<td style="text-align: right;"><span id="ev_2_1"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_2_2"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_2_3"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_2_4"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_2_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;"><span id="ev_3">1</span></th>
+		<th style="text-align: right;">－</th>
+		<td style="text-align: right;"><span id="ev_3_1"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_3_2"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_3_3"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_3_4"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_3_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;"><span id="ev_4">2</span></th>
+		<th style="text-align: right;">－</th>
+		<td style="text-align: right;"><span id="ev_4_1"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_4_2"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_4_3"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_4_4"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_4_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;"><span id="ev_5">3</span></th>
+		<th style="text-align: right;">－</th>
+		<td style="text-align: right;"><span id="ev_5_1"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_5_2"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_5_3"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_5_4"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_5_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;"><input style="text-align: right;" type="text" id="ev_6" value="0.6" size="7"></th>
+		<th style="text-align: right;">－</th>
+		<td style="text-align: right;"><span id="ev_6_1"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_6_2"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_6_3"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_6_4"></span>cm</td>
+		<td style="text-align: right;"><span id="ev_6_5"></span>cm</td>
+	</tr>
+	<tr>
+		<th colspan="9"><input type="submit" value="重新计算"></th>
+	</tr>
+	</table>
+	
+	</form>
+</p>
+
+<h3>平均 β 射线能量和屏蔽</h3><hr />
+<p>放射性物质放出β射线时，会放出各种能量，但平均能量远小于最大能量。<br>
+因此，例如在屏蔽Cs134+Cs137时，1mm铝似乎具有足够的屏蔽效果。</p>
+ <body background="img/bg1.gif">
+ 
+
+
+
+</body>
+</html>
+
+

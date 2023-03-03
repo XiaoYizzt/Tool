@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../css/t1.css" media="screen" />
+<title>辐射测量装置（盖革计数器）误差恒定的测量值抖动模拟</title>
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script language="javascript" type="text/javascript" src="jquery-1.5.2.min.js"></script>
+  <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../flot/excanvas.min.js"></script><![endif]-->
+  <script language="javascript" type="text/javascript" src="flot/jquery.flot.min.js"></script>
+<script src="js/jquery.socialbutton-1.9.0.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+   var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22952947-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+var saved_data;
+var error_threshold = [15, 10, 5, 3, 1];
+var error_color     = ["#edc240", "#afd8f8", "#cb4b4b", "#4da74d", "#9440ed"];
+var max_simulation = 100;
+
+
+$(document).ready(function() {
+	$(".update_link").click(function() {
+		setTimeout(function() {
+			restore_hash();
+			graph_update();
+			scroll_result();
+		}, 1);
+	});
+	restore_hash();
+});
+function restore_hash() {
+	if(location.hash != "") {
+		if(location.hash.match(/^#([0-9\.]+)_([0-9\.]+)$/)) {
+			var sv_h = RegExp.$1;
+			var cpm = RegExp.$2;
+			$("#sv_h").val(sv_h);
+			$("#cpm").val(cpm);
+		}
+		graph_update();
+		scroll_result();
+	}
+}
+function scroll_result() {
+	var targetOffset = $('#result_url').offset().top;
+	$('html,body').animate({scrollTop: targetOffset}, 500);
+}
+
+function graph_update() {
+	var sv_h = parseFloat($("#sv_h").val());
+	var cpm = parseFloat($("#cpm").val());
+	
+	var cps = cpm / 60;
+	var radiation_cps = sv_h * cps;
+	
+	var radiation_data = [];
+	var second_table = [];
+	for(var e = 0; e < error_threshold.length; e++) {
+		radiation_data.push([]);
+		
+		var sec = 1;
+		while(radiation_cps * sec < (10/error_threshold[e])) {
+			sec *= 1.2;
+		}
+		second_table.push(sec);
+	}
+	
+	for(var s = 0; s < max_simulation; s++) {
+		
+		var total_count = 0;
+		var error_idx = 0;
+		var old_second = 0;
+		var second = second_table[error_idx];
+		while(1) {
+			var val = poisson(radiation_cps * (second - old_second));
+			old_second = second;
+			
+			total_count += val;
+			
+			var disp_sv_h = (total_count/second) / cps;
+			var error = (1 / Math.sqrt(total_count)) * 100;
+			
+			while(error_idx < error_threshold.length) {
+				if(error <= error_threshold[error_idx]) {
+					radiation_data[error_idx][s] = [second, disp_sv_h];
+					
+					error_idx++;
+				} else {
+					break;
+				}
+			}
+			if(error_idx >= error_threshold.length) {
+				break;
+			}
+			second += second_table[error_idx];
+		}
+	}
+	
+	var series_html = '';
+	for(var e = 0; e < error_threshold.length; e++) {
+		series_html += '<input type="checkbox" name="series" value="' + e + '" checked>' + error_threshold[e] + '% ';
+	}
+	$("#series_checkbox").html(series_html);
+	$("input[name='series']").bind("change", graph_draw);
+	
+	saved_data = radiation_data;
+	graph_draw();
+	
+	var error_table_html = '<tr><th>误差</th><th>平均结束时间</th><th>估计剂量读数（95% 置信区间）</th><th>剂量读数估计误差</th><th>测量值的实验标准差</th></tr>';
+	for(var e = 0; e < error_threshold.length; e++) {
+		
+		var total_time = 0;
+		var total_svh = 0;
+		var count = 0;
+		for(var i in radiation_data[e]) {
+			total_time += radiation_data[e][i][0];
+			total_svh += radiation_data[e][i][1];
+			count++;
+		}
+		var avg = total_svh / count;
+		var sum2 = 0;
+		for(var i in radiation_data[e]) {
+			sum2 += Math.pow(radiation_data[e][i][1] - avg, 2);
+		}
+		var stddev = Math.sqrt(sum2 / (count - 1));
+		
+		error_table_html += '<tr>';
+		error_table_html += '<td style="text-align: right;">' + error_threshold[e] + '%</td>';
+		error_table_html += '<td style="text-align: right;">' + format_time(Math.floor(total_time / count)) + '</td>';
+		error_table_html += '<td style="text-align: right;">' + avg.toFixed(3) + 'μSv/h ± ' + (stddev * 1.96).toFixed(3) + 'μSv/h</td>';
+		error_table_html += '<td style="text-align: right;">' + ((stddev * 1.96)/avg*100).toFixed(1) + '%</td>';
+		error_table_html += '<td style="text-align: right;">' + stddev.toFixed(3) + 'μSv/h</td>';
+		error_table_html += '</tr>';
+	}
+	
+	
+	var href = location.href.replace(/#.*$/, "");
+	var hash = $("#sv_h").val() + "_"
+		+ $("#cpm").val();
+	$("#link_url").attr("href", href + "#" + hash);
+	$("#link_url").text(href + "#" + hash);
+	
+	$("#error_table").html(error_table_html);
+	
+}
+
+function graph_draw() {
+	var sv_h = parseFloat($("#sv_h").val());
+	
+	var radiation_graph = [];
+	radiation_graph.push({
+		data: [[1, sv_h], [max_simulation, sv_h]],
+		label: "辐射剂量",
+		points: { show: false },
+		lines: { show: true },
+		color: '#0000ff'
+	});
+	for(var e = error_threshold.length - 1; e >= 0; e--) {
+		if(!$("input[name='series'][value='" + e + "']:checked").val()) {
+			continue;
+		}
+		
+		var graph_data = [];
+		for(var i in saved_data[e]) {
+			graph_data.push([parseInt(i)+1, saved_data[e][i][1]]);
+		}
+		radiation_graph.push({
+			data: graph_data,
+			label: error_threshold[e] + "%",
+			points: { show: true },
+			lines: { show: false },
+			color: error_color[e]
+		});
+	}
+	
+	$.plot($("#placeholder"), radiation_graph, {
+		legend: {
+			container: "#legend"
+		},
+		yaxes: [
+			{ min: 0, tickFormatter: svhFormatter }
+		]
+	});
+}
+
+function poisson(lambda) {
+	var mag = 1;
+	if(lambda > 100) {
+		mag = Math.ceil(lambda / 100);
+		lambda /= mag;
+	}
+	var sum_k = 0;
+	for(var m = 0; m < mag; m++) {
+		var l = Math.exp(lambda) * Math.random();
+		var k;
+		for(k = 0; l > 1.0; k++) {
+			l *= Math.random();
+		}
+		sum_k += k;
+	}
+	return sum_k;
+}
+
+function format_time(second) {
+	var min = Math.floor(second / 60);
+	var sec = second % 60;
+	
+	return min + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function cpsFormatter(val, axis) {
+	return val.toFixed(axis.tickDecimals) + "cps";
+}
+function svhFormatter(val, axis) {
+	return val.toFixed(axis.tickDecimals) + "μSv/h";
+}
+function percentFormatter(val, axis) {
+	return val.toFixed(axis.tickDecimals) + "%";
+}
+function timeFormatter(val, axis) {
+	return format_time(val);
+}
+
+
+
+</script>
+	
+</head>
+<a href="index.html " title=" *描述文本* " style="font-size:32px;<!-- 用来设置超链接文本大小 -->">返回关于辐射及辐射测量仪器相关</a> <hr />
+
+	
+
+<p>辐射测量仪器（盖革计数器）存在误差。<br>
+由于计算了随机飞来的辐射，因此显示的数值也会波动。<br>
+	这有多大的随机性？本页模拟了这个程序。</p>
+
+	<p>大多数型号不显示误差，但Polimaster系列、GammaRAE/NeutronRAE和其他型号会在屏幕上显示。<br>
+	Polimaster PM1610说明书上说，误差显示在15%或以下后，应读取数值。<br>
+	如果您想要更精确的数字，您可能希望读取 10% 或 5%。<br>
+	但是，例如，如果您以 10% 读取，则实际数字似乎在显示值的 ±10% 以内。</p>
+	<p>在这个页面上，你可以设置辐射测量仪器的灵敏度和空气中的剂量，并迭代计算和模拟当仪器显示的误差达到一定值时，如15%、10%等，如何显示剂量。</p>
+	<p>由于每次进行模拟时结果都会发生变化，因此您可以通过多次进行模拟来了解数值如何因误差而波动。</p>
+	<p>相关工具：<a href="http://database.xkxiaoyi.ink/">数据库</a><br>
+	相关工具：<a href="error simulation.html">辐射测量仪器（盖革计数器）的误差模拟。</a><br>
+	相关工具：<a href="beta ray range calculation.html">β射线射程计算工具</a></p>
+<br><br>
+	<h3>模拟辐射测量装置（盖革计数器）存在一定误差的测量值</h3><hr />
+	<p>
+	<form action="#" onsubmit="graph_update(); return false;">
+	<table class="csv">
+		<tr>
+			<th>
+				辐射剂量设定
+		  </th>
+			<td>
+				<input type="text" id="sv_h" value="0.1" size="7">μSv/h<br>
+				*如果设置较大的值，模拟将花费时间。
+		  </td>
+		</tr>
+		<tr>
+			<th>
+				灵敏度
+		  </th>
+			<td>
+				<input type="text" id="cpm" value="100" size="7">cpm/μSv/h<br>
+				*如果设置较大的值，模拟将花费时间。
+		  </td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: center;">
+				<input type="submit" value="　开始模拟和更新图　">
+			</td>
+		</tr>
+	</table>
+	
+	</form>
+	
+	<span style="font-size: 1.1em; color: red;">* 在IE8或更早版本中，运行缓慢，会提示“Are you sure you want to stop executing the script?” 在这种情况下，请多次按“否”。如果您更新到 IE9 或 使用Google Chrome或 Firefox，模拟结果将立即出现。</span>
+	
+</p>
+
+<p id="result_url" style="font-size: 0.8em;">
+	此次模拟的URL：<a class="update_link" id="link_url" href="#"></a><br>
+</p>
+
+<h3>结果图</h3><hr />
+
+<div id="placeholder" style="width: 800px; height: 400px; float: left;"></div>
+<div id="legend" style="float: left;"></div>
+<p style="clear: left;">
+	<br>
+	<form>
+	表示ON/OFF：
+	<span id="series_checkbox"></span>
+	</form>
+</p>
+
+<h3>测量误差</h3><hr />
+
+<p>
+	<table class="csv" id="error_table">
+	</table>
+</p>
+
+<h3>其他</h3><hr />
+<img src="../img/Normal_distribution.png" alt="丢失或加载失败的图像：置信区间">
+ <body background="img/bg1.gif">
+ 
+
+
+
+</body>
+</html>
+
+

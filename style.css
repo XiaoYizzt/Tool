@@ -1,0 +1,177 @@
+/*
+    css file
+*/
+
+
+
+
+a:hover{
+  text-decoration: underline;
+  color:#f00;
+  background-color:#ffffff;
+}
+
+
+
+h4
+{
+  color: #000;
+  font-size: 1.0em;
+  line-height: 1.25em;
+  text-align: left;
+  font-weight: bold;
+  margin: 2em 0em 0.75em 0em;
+  padding: 0em 0em 0em 3em;
+  border: #ddd solid; 
+  border-width:2px 0px 0px 0px;
+}
+
+
+dl {
+  margin: 0em;
+  padding: 0em;
+}
+dt {
+  border-bottom: #c9e 2px dotted;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #749;
+  text-indent: 1em;
+}
+dd {
+  margin-left: 24px;
+  font-size: 0.8em;
+  padding-bottom: 0.8em;
+}
+
+input.right {
+  text-align: right;
+}
+
+
+/* --- Table setting ------------------------------------------------------ */
+table.col {border-collapse:collapse;}
+table.sep {border-collapse:separate;}
+
+table.csv{
+  border-color: #f0f0ff #d0d0dd #d0d0dd #f0f0ff;
+  border-width: 2px;
+  border-style: groove ridge ridge groove;
+  border-collapse:collapse;
+  padding:0px;
+  margin:0px 0px 0px 0px;
+  empty-cells:show;
+}
+table.csv th{
+	border-color: #d0d0dd #f0f0ff #f0f0ff #d0d0dd;
+	border-width: 2px;
+	border-style: groove;
+	background-color: #eeffff;
+	font-size: 12px;
+	font-weight: bold;
+	vertical-align: middle;
+	padding: 3px;
+}
+table.csv td{
+	border-color: #d0d0dd #f0f0ff #f0f0ff #d0d0dd;
+	border-width: 2px;
+	border-style: groove;
+	font-size: 9pt;
+	vertical-align: top;
+	padding: 3px;
+}
+
+table.formtable{
+  border-color: #f0f0ff #d0d0dd #d0d0dd #f0f0ff;
+  border-width: 2px;
+  border-style: groove ridge ridge groove;
+  border-collapse:collapse;
+  padding:0px;
+  margin:0px 0px 0px 0px;
+  empty-cells:show;
+}
+table.formtable th{
+  border-color: #d0d0dd #f0f0ff #f0f0ff #d0d0dd;
+  border-width: 2px;
+  border-style: groove;
+  background-color: #eeffff;
+  font-size:12px;
+  font-weight:bold;
+  text-align:center;
+  vertical-align:middle;
+  padding:3px;
+}
+table.formtable td{
+  border-color: #d0d0dd #f0f0ff #f0f0ff #d0d0dd;
+  border-width: 2px;
+  border-style: groove;
+  font-size:9pt;
+  vertical-align:middle;
+  padding:3px;
+}
+table.formtable input{
+  font-size:9pt;
+  vertical-align:middle;
+}
+
+table.noborder {
+  border-color: #f0f0ff #d0d0dd #d0d0dd #f0f0ff;
+  border-width: 2px;
+  border-style: none;
+  border-collapse:collapse;
+  padding:0px;
+  margin:0px 0px 0px 0px;
+  empty-cells:show;
+}
+table.noborder th{
+  border-color: #d0d0dd #f0f0ff #f0f0ff #d0d0dd;
+  border-width: 2px;
+  border-style: none;
+  background-color: #eeffff;
+  font-size:12px;
+  font-weight:bold;
+  text-align:center;
+  vertical-align:middle;
+  padding:3px;
+}
+table.noborder td{
+  border-color: #d0d0dd #f0f0ff #f0f0ff #d0d0dd;
+  border-width: 2px;
+  border-style: none;
+  font-size:9pt;
+  vertical-align:top;
+  padding:3px;
+}
+
+div > *:first-child { margin-top: 0; }
+
+
+/* for SNS button */
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	display: inline-block;
+}
+/* Hides from IE-mac \*/
+* html .clearfix {
+	height: 1%;
+}
+.clearfix {
+	display: block;
+}
+/* End hide from IE-mac */
+
+.block div {
+	margin-left: 15px;
+	float: right;
+}
+.csv tr .center {
+	text-align: center;
+}

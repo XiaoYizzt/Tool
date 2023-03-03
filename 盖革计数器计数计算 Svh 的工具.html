@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../css/t1.css" media="screen" />
+<title>计算辐射计（盖革计数器）测量值平均值的工具</title>
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script language="javascript" type="text/javascript" src="jquery-1.5.2.min.js"></script>
+  <script src="js/jquery.cookie.js"></script>
+  <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="flot/excanvas.min.js"></script><![endif]-->
+  <script language="javascript" type="text/javascript" src="flot/jquery.flot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="flot/jquery.flot.fillbetween.min.js"></script>
+  <script language="javascript" type="text/javascript" src="js/jstat-1.0.0.min.js"></script>
+<script src="js/jquery.socialbutton-1.9.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22952947-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script language="javascript" type="text/javascript" src="js/tdistdata.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	$("#twitter_post").bind("click", function() {
+		twitter();
+	});
+	
+	// cookie
+	$("#detector_name").bind("change", function() {
+		$.cookie('radiation_calc_detector_name', $("#detector_name").val(), { expires: 90, path: '/' });
+	});
+	$("input[name='hashtag']").bind("change", function() {
+		var hashtag = $("input[name='hashtag']:checked").map( function() {
+			return $(this).val();
+		}).get().join(" ");
+		$.cookie('radiation_calc_hashtag', hashtag, { expires: 90, path: '/' });
+	});
+	$("input[name='data_cpm2svh']").bind("change", function() {
+		$.cookie('radiation_calc_data_cpm2svh', $("input[name='data_cpm2svh']").val(), { expires: 90, path: '/' });
+	});
+	
+	var detector_name = $.cookie('radiation_calc_detector_name');
+	if(detector_name != null) {
+		$("#detector_name").val(detector_name);
+	}
+	var hashtag = $.cookie('radiation_calc_hashtag');
+	if(hashtag != null) {
+		$("input[name='hashtag']").val(hashtag.split(/ /));
+	}
+	var data_cpm2svh = $.cookie('radiation_calc_data_cpm2svh');
+	if(data_cpm2svh != null) {
+		$("input[name='data_cpm2svh']").val(data_cpm2svh);
+	}
+	
+	// setup...
+	restore_hash();
+});
+
+
+function get_current_second() {
+	return Math.floor((new Date()).getTime() / 1000);
+}
+
+function format_time(second) {
+	var min = Math.floor(second / 60);
+	var sec = second % 60;
+	
+	return min + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function restore_hash() {
+	if(location.hash != "") {
+		if(location.hash.match(/^#((_[0-9\.]+){5})$/)) {
+			var data_str = RegExp.$1;
+			data_str = data_str.replace(/^_/, "");
+			var data = data_str.split("_");
+			
+			$("input[name='data_hour']").val(data[0]);
+			$("input[name='data_min']").val(data[1]);
+			$("input[name='data_sec']").val(data[2]);
+			$("input[name='data_count']").val(data[3]);
+			$("input[name='data_cpm2svh']").val(data[4]);
+			
+		}
+		graph_update();
+		scroll_result();
+	} else {
+		graph_update();
+	}
+}
+function scroll_result() {
+	var targetOffset = $('#result').offset().top;
+	$('html,body').animate({scrollTop: targetOffset}, 500);
+}
+
+function graph_update() {
+	var rad_graph = [[], []];
+	var rad_graph_low = [[], []];
+	var rad_graph_avg_low = [[], []];
+	var rad_graph_avg = [[], []];
+	var rad_graph_avg_high = [[], []];
+	var rad_graph_high = [[], []];
+	var rad_line_graph = [[], []];
+	var all_avg = [];
+	var all_stddev = [];
+	var all_uncertainty = [];
+	var all_max;
+	var all_min;
+	
+	var input_values = [];
+	
+	// count, second
+	var total_data = [0, 0];
+	
+	var hash_string = '';
+	
+	var hour    = convert_ztoh($("input[name='data_hour']").val());
+	var min     = convert_ztoh($("input[name='data_min']").val());
+	var sec     = convert_ztoh($("input[name='data_sec']").val());
+	var count   = convert_ztoh($("input[name='data_count']").val());
+	var cpm2svh = convert_ztoh($("input[name='data_cpm2svh']").val());
+	
+	hash_string += '_' + hour + '_' + min + '_' + sec + '_' + count + '_' + cpm2svh;
+	
+	var second = parseInt(hour) * 3600 + parseInt(min) * 60 + parseInt(sec);
+	var count = parseInt(count);
+	
+	total_data[0] += count;
+	total_data[1] += second
+	
+	var dist95 = 1.9599639823278796;
+	var dist99 = 2.575823590783707;
+	var dist9973 = 2.9999383783216116;
+	
+	var cpsdata = [];
+	var cps_min = 0;
+	
+	var count = total_data[0];
+	var second = total_data[1];
+	
+	var error = Math.sqrt(count);
+	
+	if(second > 0) {
+		var cps = count / second;
+		var cps_error = error / second;
+		
+		cpsdata[0] = cps * 60 / cpm2svh;
+		cpsdata[1] = cps_error * 60 / cpm2svh;
+		
+		if((cps_min == 0 || cps_min > cps) && cps > 0)
+			cps_min = cps;
+	} else {
+		cpsdata[0] = 0;
+		cpsdata[1] = 0;
+	}
+	
+	var cpsDecimals = (cps_min == 0) ? 0 : Math.floor(Math.log(cps_min) / Math.log(10));
+	cpsDecimals = (cpsDecimals < 0) ? -cpsDecimals : 0;
+	cpsDecimals += 1;
+	if(cpsDecimals > 20)
+		cpsDecimals = 20;
+	var svhDecimals = (cps_min == 0) ? 0 : Math.floor(Math.log(cps_min / cpm2svh) / Math.log(10));
+	svhDecimals = (svhDecimals < 0) ? -svhDecimals : 0;
+	svhDecimals += 1;
+	if(svhDecimals > 20)
+		svhDecimals = 20;
+	var svhPerDecimals = svhDecimals - 2;
+	if(svhPerDecimals < 0)
+		svhPerDecimals = 0;
+	
+	$("#total_cps").text((count / second).toFixed(cpsDecimals));
+	$("#total_svh").text(cpsdata[0].toFixed(svhDecimals));
+	$("#total_error").text(cpsdata[1].toFixed(svhDecimals));
+	
+	$("#total_error95").html(cpsdata[0].toFixed(svhDecimals)
+		+ "±" + (cpsdata[1] * dist95).toFixed(svhDecimals) + "<br>"
+		+ "(±" + (cpsdata[1] * dist95 / cpsdata[0] * 100).toFixed(svhPerDecimals) + "%)");
+	$("#total_error99").html(cpsdata[0].toFixed(svhDecimals)
+		+ "±" + (cpsdata[1] * dist99).toFixed(svhDecimals) + "<br>"
+		+ "(±" + (cpsdata[1] * dist99 / cpsdata[0] * 100).toFixed(svhPerDecimals) + "%)");
+	$("#total_error9973").html(cpsdata[0].toFixed(svhDecimals)
+		+ "±" + (cpsdata[1] * dist9973).toFixed(svhDecimals) + "<br>"
+		+ "(±" + (cpsdata[1] * dist9973 / cpsdata[0] * 100).toFixed(svhPerDecimals) + "%)");
+	
+	
+	var href = location.href.replace(/#.*$/, "");
+	$("#link_url").attr("href", href + "#" + hash_string);
+	$("#link_url").text(href + "#" + hash_string);
+	
+	
+	var x_min = cpsdata[0] - cpsdata[1] * 4;
+	var x_max = cpsdata[0] + cpsdata[1] * 4;
+	
+	var steps = 200;
+	var x_step = (x_max - x_min) / steps;
+	
+	
+	var graph_data = [];
+	for(var i = 0; i <= steps; i++) {
+		var x = x_min + x_step * i;
+		graph_data.push([x, normal(x, cpsdata[0], cpsdata[1])]);
+	}
+	
+	
+	$.plot($("#placeholder"), [
+		{
+			data: graph_data,
+			label: "测量值",
+			lines: { show: true, fill: true },
+			points: { show: false },
+			color: "rgb(20,50,255)"
+		}
+	], {
+		xaxis: {
+			min: x_min,
+			max: x_max
+		},
+		yaxis: {
+			show: false
+		}
+	});
+	
+	
+}
+
+function normal(x, avg, error) {
+	if(error <= 0) {
+		return 0;
+	}
+	
+	var z = (x - avg) / error;
+	return Math.exp(-0.5 * z * z) / (Math.sqrt(2 * Math.PI) * error);
+}
+
+
+function twitter() {
+	
+	var width = 550;
+	var height = 420;
+	
+	var left = Math.round((screen.width / 2) - (width / 2));
+	var top = 0;
+	if(screen.height > height) {
+		top = Math.round((screen.height / 2) - (height / 2));
+	}
+	
+	var text = '';
+	
+	var total_error = $("#total_error95").html();
+	total_error = total_error.replace(/<br>/i, "μSv/h");
+	total_error = total_error.replace(/\(数据不可用\)/g, "");
+	total_error = total_error.replace(/ /g, "");
+	text += total_error + ' (95%置信区间) '
+	
+	if($("#detector_name").val() != "") {
+		text += $("#detector_name").val() + ' ';
+	}
+	if($("#title").val() != "") {
+		text += $("#title").val() + ' ';
+	}
+	
+	var href = 'http://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
+	href += '&url=' + encodeURIComponent($("#link_url").text());
+	
+	var windowOptions = 'scrollbars=yes,resizable=yes,toolbar=no,location=yes';
+	
+	window.open(href, 'intent', windowOptions + ',width=' + width + ',height=' + height + ',left=' + left + ',top=' + top);
+	
+	return false;
+}
+
+function convert_ztoh(str) {
+	str = str.replace(/ー/g, "-");
+	str = str.replace(/－/g, "-");
+	str = str.replace(/０/g, "0");
+	str = str.replace(/１/g, "1");
+	str = str.replace(/２/g, "2");
+	str = str.replace(/３/g, "3");
+	str = str.replace(/４/g, "4");
+	str = str.replace(/５/g, "5");
+	str = str.replace(/６/g, "6");
+	str = str.replace(/７/g, "7");
+	str = str.replace(/８/g, "8");
+	str = str.replace(/９/g, "9");
+	str = str.replace(/，/g, "");
+	str = str.replace(/,/g, "");
+	str = str.replace(/、/g, ".");
+	str = str.replace(/．/g, ".");
+	return str;
+}
+
+</script>
+
+</head>
+<body>
+
+<a href="index.html " title=" *描述文本* " style="font-size:32px;<!-- 用来设置超链接文本大小 -->">返回关于辐射及辐射测量仪器相关</a> <hr />
+
+<h1>一种根据辐射测量装置（盖革计数器）的计数计算 Sv/h 的工具</h1>
+	<p>适用于inspector等带有定时器的机型</p>
+
+	
+
+<div style="margin: 0 0 0 20px; width: 350px; float: left;">
+<p>
+	<form action="#" onsubmit="graph_update(); return false;">
+	<table class="csv">
+		<tr>
+			<th>－</th>
+			<th>测量值</th>
+		</tr>
+		<tr>
+			<th nowrap>
+				测量时间
+			</th>
+			<td nowrap style="vertical-align: baseline;">
+				<input type="text" name="data_hour" value="0" size="2">小时
+				<input type="text" name="data_min" value="0" size="2">分
+				<input type="text" name="data_sec" value="0" size="2">秒
+			</td>
+		</tr>
+		<tr>
+			<th nowrap>
+				计数
+			</th>
+			<td nowrap style="vertical-align: baseline; text-align: right;">
+				<input type="text" name="data_count" value="0" size="7">计数
+			</td>
+		</tr>
+		<tr>
+			<th nowrap>
+				灵敏度	
+			</th>
+			<td nowrap style="vertical-align: baseline; text-align: right;">
+				<input type="text" name="data_cpm2svh" value="334" size="7">cpm/μSv/h
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: center;">
+				<input type="submit" value="计算Sv/h">
+			</td>
+		</tr>
+	</table>
+	
+	</form>
+</p>
+</div>
+
+<div style="margin: 0 0 0 20px; width: 300px; float: left;">
+	*主要型号的灵敏度<br>
+	<table class="csv">
+		<tr><th>型号名</th><th>灵敏度（cpm/μSv/h）</th></tr>
+		<tr><td>Inspector+</td><td>334</td></tr>
+		<tr><td>Coliy Radiation Scanner 900</td><td>80.4</td></tr>
+	</table>
+	
+</div>
+
+<div style="clear: left;">
+<div id="placeholder" style="width: 500px; height: 300px;"></div>
+<br>
+<table class="csv" style="width: 420px; margin: 0 40px;">
+	<tr>
+		<th>－</th>
+		<th>测量值値</th>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			测量值(cps)
+		</td>
+		<td colspan="1" style="text-align: right;">
+			<span id="total_cps"></span>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			测量值(μSv/h)
+		</td>
+		<td colspan="1" style="text-align: right;">
+			<span id="total_svh"></span>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			误差(μSv/h)<br>
+			（测量值的变化）
+		</td>
+		<td colspan="1" style="text-align: right;">
+			<span id="total_error"></span>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			测量值(μSv/h)<br>
+			（95%置信区间）
+		</td>
+		<td colspan="1" style="text-align: right;">
+			<span id="total_error95"></span>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			测量值(μSv/h)<br>
+			（99%置信区间）
+		</td>
+		<td colspan="1" style="text-align: right;">
+			<span id="total_error99"></span>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="1" style="text-align: right;">
+			测量值(μSv/h)<br>
+			（99.73%置信区间）
+		</td>
+		<td colspan="1" style="text-align: right; background-color: #fff8ff;">
+			<span id="total_error9973"></span>
+		</td>
+	</tr>
+</table>
+<br>
+</div>
+
+<div>
+	
+	<p id="result_url" style="font-size: 0.8em;">
+		<br>
+		此结果的 URL：<a class="update_link" id="link_url" href="#"></a><br>
+	</p>
+	
+	<h2>用法</h2><hr>
+	
+	<p>将使用盖革计数器的定时器模式测量的计数转换为 Sv/h。<br>
+	输入测量时间、计数和测量仪器的灵敏度并计算。
+	注意：
+	<ul>
+		<li>灵敏度取决于盖革计数器。如果您没有正确输入机型的灵敏度，计算将不正确。
+		<li>只有在测量伽马射线时才可以转换为 Sv/h。除非对α射线和β射线进行屏蔽，否则计算不会正确。<br>
+			参考：<a href="info/info0001.html">使用盖革计数器测量 β 射线时显示不正确</a>
+	</ul></p>
+	
+	
+
+ <body background="img/bg1.gif">
+ 
+
+
+
+</body>
+</html>
+
+
