@@ -1,0 +1,470 @@
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+	<head>
+		<title>Rad Pro Calculator: Free Online Radioactive Isotopes Decay Calculator</title>
+		<meta content="Microsoft Visual Studio .NET 9.0" name="GENERATOR" />
+		<meta content="Visual Basic .NET 9.0" name="CODE_LANGUAGE" />
+		<meta content="JavaScript" name="vs_defaultClientScript" />
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema" />
+		<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+	    <link rel="shortcut icon" href="RadPro.ico" />
+	    <link rel="stylesheet" href="CSS/PageLinks.css" type="text/css" />
+	    
+	</head>
+	<body background="Images/pagebkg2009.jpg">
+		<form name="Form1" method="post" action="./Decay.aspx" id="Form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJMTk2MjYxNDIwD2QWAgIBD2QWAgIHD2QWAmYPZBYQAgEPEGQQFVMNQWN0aW5pdW0gKEFjKQ5BbWVyaWNpdW0gKEFtKQ1BbnRpbW9ueSAoU2IpCkFyZ29uIChBcikMQXJzZW5pYyAoQXMpDUFzdGF0aW5lIChBdCkLQmFyaXVtIChCYSkOQmVyeWxsaXVtIChCZSkMQmlzbXV0aCAoQmkpDEJyb21pbmUgKEJyKQxDYWRtaXVtIChDZCkMQ2FsY2l1bSAoQ2EpEENhbGlmb3JuaXVtIChDZikKQ2FyYm9uIChDKQtDZXJpdW0gKENlKQtDZXNpdW0gKENzKQ1DaGxvcmluZSAoQ2wpDUNocm9taXVtIChDcikLQ29iYWx0IChDbykLQ29wcGVyIChDdSkLQ3VyaXVtIChDbSkPRHlzcHJvc2l1bSAoRHkpC0VyYml1bSAoRXIpDUV1cm9waXVtIChFdSkMRmx1b3JpbmUgKEYpD0dhZG9saW5pdW0gKEdkKQxHYWxsaXVtIChHYSkOR2VybWFuaXVtIChHZSkJR29sZCAoQXUpDEhvbG1pdW0gKEhvKQxIeWRyb2dlbiAoSCkLSW5kaXVtIChJbikKSW9kaW5lIChJKQxJcmlkaXVtIChJcikJSXJvbiAoRmUpDEtyeXB0b24gKEtyKQ9MYW50aGFuaXVtIChMYSkJTGVhZCAoUGIpDUx1dGV0aXVtIChMdSkOTWFuZ2FuZXNlIChNbikPTW9seWJkZW51bSAoTW8pDk5lcHR1bml1bSAoTnApC05pY2tlbCAoTmkpDE5pb2JpdW0gKE5iKQxOaXRyb2dlbiAoTikLT3NtaXVtIChPcykKT3h5Z2VuIChPKQ5QYWxsYWRpdW0gKFBkKQ9QaG9zcGhvcm91cyAoUCkOUGx1dG9uaXVtIChQdSkNUG9sb25pdW0gKFBvKQ1Qb3Rhc3NpdW0gKEspEVByYXNlb2R5bWl1bSAoUHIpD1Byb21ldGhpdW0gKFBtKRJQcm90b2FjdGluaXVtIChQYSkLUmFkaXVtIChSYSkKUmFkb24gKFJuKQxSaGVuaXVtIChSZSkMUmhvZGl1bSAoUmgpDVJ1YmlkaXVtIChSYikOUnV0aGVuaXVtIChSdSkNU2FtYXJpdW0gKFNtKQ1TY2FuZGl1bSAoU2MpDVNlbGVuaXVtIChTZSkLU2lsdmVyIChBZykLU29kaXVtIChOYSkOU3Ryb250aXVtIChTcikKU3VsZnVyIChTKQ1UYW50YWx1bSAoVGEpEFRlY2huZWN0aXVtIChUYykOVGVsbHVyaXVtIChUZSkMVGVyYml1bSAoVGIpDVRoYWxsaXVtIChUbCkMVGhvcml1bSAoVGgpDVRodWxsaXVtIChUbSkIVGluIChTbikMVHVuZ3N0ZW4gKFcpC1VyYW5pdW0gKFUpClhlbm9uIChYZSkMWWl0dHJpdW0gKFkpDll0dGVyYml1bSAoWWIpCVppbmMgKFpuKQ5aaXJjb25pdW0gKFpyKRVTDUFjdGluaXVtIChBYykOQW1lcmljaXVtIChBbSkNQW50aW1vbnkgKFNiKQpBcmdvbiAoQXIpDEFyc2VuaWMgKEFzKQ1Bc3RhdGluZSAoQXQpC0Jhcml1bSAoQmEpDkJlcnlsbGl1bSAoQmUpDEJpc211dGggKEJpKQxCcm9taW5lIChCcikMQ2FkbWl1bSAoQ2QpDENhbGNpdW0gKENhKRBDYWxpZm9ybml1bSAoQ2YpCkNhcmJvbiAoQykLQ2VyaXVtIChDZSkLQ2VzaXVtIChDcykNQ2hsb3JpbmUgKENsKQ1DaHJvbWl1bSAoQ3IpC0NvYmFsdCAoQ28pC0NvcHBlciAoQ3UpC0N1cml1bSAoQ20pD0R5c3Byb3NpdW0gKER5KQtFcmJpdW0gKEVyKQ1FdXJvcGl1bSAoRXUpDEZsdW9yaW5lIChGKQ9HYWRvbGluaXVtIChHZCkMR2FsbGl1bSAoR2EpDkdlcm1hbml1bSAoR2UpCUdvbGQgKEF1KQxIb2xtaXVtIChIbykMSHlkcm9nZW4gKEgpC0luZGl1bSAoSW4pCklvZGluZSAoSSkMSXJpZGl1bSAoSXIpCUlyb24gKEZlKQxLcnlwdG9uIChLcikPTGFudGhhbml1bSAoTGEpCUxlYWQgKFBiKQ1MdXRldGl1bSAoTHUpDk1hbmdhbmVzZSAoTW4pD01vbHliZGVudW0gKE1vKQ5OZXB0dW5pdW0gKE5wKQtOaWNrZWwgKE5pKQxOaW9iaXVtIChOYikMTml0cm9nZW4gKE4pC09zbWl1bSAoT3MpCk94eWdlbiAoTykOUGFsbGFkaXVtIChQZCkPUGhvc3Bob3JvdXMgKFApDlBsdXRvbml1bSAoUHUpDVBvbG9uaXVtIChQbykNUG90YXNzaXVtIChLKRFQcmFzZW9keW1pdW0gKFByKQ9Qcm9tZXRoaXVtIChQbSkSUHJvdG9hY3Rpbml1bSAoUGEpC1JhZGl1bSAoUmEpClJhZG9uIChSbikMUmhlbml1bSAoUmUpDFJob2RpdW0gKFJoKQ1SdWJpZGl1bSAoUmIpDlJ1dGhlbml1bSAoUnUpDVNhbWFyaXVtIChTbSkNU2NhbmRpdW0gKFNjKQ1TZWxlbml1bSAoU2UpC1NpbHZlciAoQWcpC1NvZGl1bSAoTmEpDlN0cm9udGl1bSAoU3IpClN1bGZ1ciAoUykNVGFudGFsdW0gKFRhKRBUZWNobmVjdGl1bSAoVGMpDlRlbGx1cml1bSAoVGUpDFRlcmJpdW0gKFRiKQ1UaGFsbGl1bSAoVGwpDFRob3JpdW0gKFRoKQ1UaHVsbGl1bSAoVG0pCFRpbiAoU24pDFR1bmdzdGVuIChXKQtVcmFuaXVtIChVKQpYZW5vbiAoWGUpDFlpdHRyaXVtIChZKQ5ZdHRlcmJpdW0gKFliKQlaaW5jIChabikOWmlyY29uaXVtIChacikUKwNTZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2cWAWZkAgMPEGQPFgZmAgECAgIDAgQCBRYGEAUGQWMtMjI1BQZBYy0yMjVnEAUGQWMtMjI3BQZBYy0yMjdnEAUGQWMtMjI4BQZBYy0yMjhnEAUGQWMtMjI1BQZBYy0yMjVnEAUGQWMtMjI3BQZBYy0yMjdnEAUGQWMtMjI4BQZBYy0yMjhnFgECAWQCDw8PFgIeBFRleHQFBVllYXJzZGQCEw8QZGQWAQICZAIfDw8WAh8ABQNjcG1kZAIhDw8WAh8ABQNjcG1kZAIqDxBkDxYYZgIBAgICAwIEAgUCBgIHAggCCQIKAgsCDAINAg4CDwIQAhECEgITAhQCFQIWAhcWGBAFA2NwbQUDY3BtZxAFA2RwbQUDZHBtZxAFA3BDaQUDcENpZxAFA25DaQUDbkNpZxAFA3VDaQUDdUNpZxAFA21DaQUDbUNpZxAFAkNpBQJDaWcQBQJCcQUCQnFnEAUDa0JxBQNrQnFnEAUDTUJxBQNNQnFnEAUDR0JxBQNHQnFnEAUDVEJxBQNUQnFnEAUDY3BtBQNjcG1nEAUDZHBtBQNkcG1nEAUDcENpBQNwQ2lnEAUDbkNpBQNuQ2lnEAUDdUNpBQN1Q2lnEAUDbUNpBQNtQ2lnEAUCQ2kFAkNpZxAFAkJxBQJCcWcQBQNrQnEFA2tCcWcQBQNNQnEFA01CcWcQBQNHQnEFA0dCcWcQBQNUQnEFA1RCcWcWAWZkAjUPEA8WAh4HQ2hlY2tlZGhkZGRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBQhjaGtPdGhlchCJGo+olT1XBlbVFItTEaImvsutEODhT8u7SSqjEHid" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Form1'];
+if (!theForm) {
+    theForm = document.Form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=WT33pTT2GiD9YqLHKKY22-WwnKHUS_KxLPwN2mEymLrRCdrfZe_OWjrx8IWgH-LApYR8LrPRpzVoYXSfbFODOyyNBmt_pOfuJzO3AhxRNFE1&amp;t=637100518460000000" type="text/javascript"></script>
+
+<script language='javascript' type='text/javascript' >
+<!--
+function MetaBuilders_FirstFocus_Focus( id, name)  {
+	var targetControl = MetaBuilders_FirstFocus_FindControl( id, name );
+	if ( targetControl != null && targetControl.focus ) {
+		targetControl.focus();
+	}
+}
+function MetaBuilders_FirstFocus_FindControl( id, name ) {
+	if ( typeof(document.getElementById) != "undefined" ) {
+		var focusControl = document.getElementById(id);
+		if ( focusControl != null ) {
+			return focusControl;
+		}
+	}
+	for( var i = 0; i < document.forms.length; i++ ) {
+		var theForm = document.forms[i];
+		var focusControl = theForm[name];
+		if ( focusControl != null ) {
+			return focusControl;
+		}
+	}
+	return null;
+}
+//-->
+</script>
+<script src="/ScriptResource.axd?d=jQef98vCYitJVL0h6mi5HQPHme0tVFScj3y_9CJwNcQ4tJJly2QrqgCbkf3DbebBN-GhXRE-1SxjthSZkQMhdb-AvHk-BKkzkpk4VVEgIjgGIcVIifENKUfhhIUNRCpG202tPcIbolFIyQz4bkQZdw2&amp;t=f2cd5c5" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side framework failed to load.');
+//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=tAj0rXyX01yyYFMdIeAFBUTYvNifDjp6oC2xzALXUobCnc0fg7Z_Qumz1F6Owqeq084QVlpCr9-4LilBl-Oyv2w-RlgvXGfB7jMIiGjY-rmP24rrx9ivrUVBD73EACj5AmCrxFDEwW-9AF5neY-wXg2&amp;t=f2cd5c5" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="C89207B4" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="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" />
+</div>
+		
+        
+        <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager1', 'Form1', ['tUpdatePanel1',''], [], [], 90, '');
+//]]>
+</script>
+
+        
+
+
+<head>
+
+<meta name="google-site-verification" content="6Y2U8e5MXiN5ffSUBMytxx6-ZQqbb3-MT-kMFXxzflg" />
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-17223493-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+<script type="text/javascript" language="JavaScript1.2" src="js/stmenu.js"></script>
+</head>
+
+   
+<script type="text/javascript" language="javascript">ERRunSWFContent = 0;</script>
+<script type="text/javascript" src="ERRunSWFContent.js" language="javascript"></script>
+
+	<div id="CalculatorHeader1_Panel20" style="height:98px;width:768px;z-index: 1; left: 46px;
+            position: absolute; top: 8px">
+	
+       
+     	
+	
+
+        <script id="dxis_784268246" src="/DXR.axd?r=1_62-mJSri" type="text/javascript"></script><link rel="stylesheet" type="text/css" href="/DXR.axd?r=1_66,1_67,1_68,1_283,1_280-mJSri" /><img class="dxeImage dxe-loadingImage" id="CalculatorHeader1_ASPxImage1" onload="ASPx.ASPxImageLoad.OnLoad(this,&#39;&#39;,0,&#39;&#39;)" onabort="ASPx.ASPxImageLoad.OnLoad(this,&#39;&#39;,0,&#39;&#39;)" onerror="ASPx.ASPxImageLoad.OnLoad(this,&#39;&#39;,0,&#39;&#39;)" src="Images/RadProHeader.jpg" alt="" />
+ 
+        
+</div>
+        &nbsp; &nbsp; &nbsp;
+        
+    <p>
+         
+
+    &nbsp;<DIV style="BORDER-RIGHT: #cc00ff thick; BORDER-TOP: #cc00ff thick; BORDER-LEFT: #cc00ff thick; WIDTH: 754px; COLOR: #3366cc; BORDER-BOTTOM: #cc00ff thick; HEIGHT: 98px; left: 40px; top: 24px; z-index: 101; position: absolute;">
+      
+         <script type="text/javascript" src="js/stmenu.js"></script> 
+        &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+    <div id="CalculatorHeader1_Panel1" style="height:21px;width:751px;text-align:left;z-index: 102; left: 15px;
+        position: relative; top: 67px">
+	
+  
+<script type="text/javascript" language="JavaScript1.2">
+<!--
+    stm_bm(["menu61b2", 730, "MenuImages", "blank.gif", 0, "", "", 0, 0, 250, 0, 1000, 1, 1, 0, "", "540", 0, 0, 1, 2, "default", "hand", "js/"], this);
+    stm_bp("p0", [0, 4, 0, 0, 0, 4, 0, 16, 100, "", -2, "", -2, 90, 0, 0, "#999999", "transparent", "", 3, 0, 0, "#E6FAB4 #788C32 #788C32 #E6FAB4"]);
+    stm_ai("p0i0", [0, "Site Navigation Menu", "", "", -1, -1, 0, "", "_self", "", "", "", "", 0, 0, 0, "", "", 0, 0, 0, 0, 1, "#5D5EBB", 0, "#5D5EBB", 0, "", "", 3, 3, 1, 1, "#BEE6F0 #64878C #64878C #BEE6F0", "#64878C #BEE6F0 #BEE6F0 #64878C", "#FFFFFF", "#FFFFFF", "bold 8pt Arial", "bold 8pt Arial", 0, 0], 80, 23);
+    stm_aix("p0i1", "p0i0", [0, "Home Page", "", "", -1, -1, 0, "default.aspx", "_self", "", "", "", "", 0, 0, 0, "", "", 0, 0, 0, 0, 1, "#9DACE6", 0, "#D1D8F3", 0, "", "", 3, 3, 1, 1, "#BEE6F0 #64878C #64878C #BEE6F0", "#64878C #BEE6F0 #BEE6F0 #64878C", "#333366", "#333366"], 80, 23);
+    stm_aix("p0i2", "p0i1", [0, "Online Calculators", "", "", -1, -1, 0, "", "_self", "", "", "", "", 0, 0, 0, "0604scroll2ldlalr.gif", "0604scroll2ldlalr.gif", 16, 9], 80, 23);
+    stm_bp("p1", [1, 4, 0, 0, 0, 4, 0, 16, 100, "", -2, "", -2, 58, 0, 0, "#999999", "transparent", "", 3, 0, 0, "#000000"]);
+    stm_aix("p1i0", "p0i2", [0, "Dose-Rate"], 250, 18);
+    stm_bpx("p2", "p1", [1, 2, 0, 0, 0, 4, 0, 0]);
+    stm_aix("p2i0", "p0i0", [0, "Gamma Activity to Dose-Rate With Shielding", "", "", -1, -1, 0, "Gamma.aspx", "_self", "", "", "", "", 0, 0, 0, "", "", 0, 0, 0, 0, 1, "#E3E8F9", 0, "#D1D8F3", 0, "", "", 3, 3, 1, 1, "#FFFFFF #A0A0A0 #A0A0A0 #FFFFFF", "#A0A0A0 #FFFFFF #FFFFFF #A0A0A0", "#4B4B4B", "#000000", "8pt Arial", "8pt Arial"], 250, 18);
+    stm_aix("p2i1", "p2i0", [0, "Beta Activity to Dose-Rate", "", "", -1, -1, 0, "Beta.aspx"], 250, 18);
+    stm_aix("p2i2", "p2i0", [0, "Bremsstrahlung (Beta Shielding)", "", "", -1, -1, 0, "Bremsstrahlung.aspx"], 250, 18);
+    stm_aix("p2i3", "p2i0", [0, "X-ray Devices Dose-Rate", "", "", -1, -1, 0, "XRay.aspx"], 250, 18);
+    stm_aix("p2i4", "p2i0", [0, "ALARA Calculations", "", "", -1, -1, 0, "ALARA.aspx"], 250, 18);
+    stm_aix("p2i5", "p2i0", [0, "Inverse Square Law", "", "", -1, -1, 0, "InverseSquare.aspx"], 250, 18);
+    stm_ep();
+    stm_aix("p1i1", "p2i0", [0, "Radiological Units Conversions", "", "", -1, -1, 0, "Conversion.aspx"], 250, 18);
+    stm_aix("p1i2", "p0i2", [0, "Decay Calculations"], 250, 18);
+    stm_bpx("p3", "p2", []);
+    stm_aix("p3i0", "p2i0", [0, "Decay (New Activity)", "", "", -1, -1, 0, "Decay.aspx"], 150, 18);
+    stm_aix("p3i1", "p2i0", [0, "Half-Life Calculator", "", "", -1, -1, 0, "HalfLife.aspx"], 150, 18);
+    stm_aix("p3i2", "p2i0", [0, "Timed Decay", "", "", -1, -1, 0, "TimedDecay.aspx", "_self", "", "New!!! How long does it take for an isotope to decay to a specified activity and on what date does it reach that activity?"], 150, 18);
+    stm_ep();
+    stm_aix("p1i3", "p0i2", [0, "Uranium Calculations"], 250, 18);
+    stm_bpx("p4", "p2", []);
+    //stm_aix("p4i0", "p2i0", [0, "Enrichment", "", "", -1, -1, 0, "UraniumEnrichment.aspx"], 150, 18);
+    //stm_aix("p4i1", "p2i0", [0, "Fuel Loading", "", "", -1, -1, 0, "UraniumFuel.aspx"], 150, 18);
+    stm_aix("p4i2", "p2i0", [0, "Specific Activity", "", "", -1, -1, 0, "Grams.aspx"], 150, 18);
+    stm_ep();
+    stm_aix("p1i4", "p0i2", [0, "MDC/MDA"], 250, 18);
+    stm_bpx("p5", "p2", []);
+    stm_aix("p5i0", "p2i0", [0, "Scaler/Static", "", "", -1, -1, 0, "ScalerMDC.aspx"], 150, 18);
+    stm_aix("p5i1", "p2i0", [0, "Scanner/Frisker", "", "", -1, -1, 0, "ScanMDC.aspx"], 150, 18);
+    stm_ep();
+    stm_ep();
+    stm_aix("p0i3", "p0i2", [0, "Freeware"], 80, 23);
+    stm_bpx("p6", "p2", [1, 4]);
+    stm_aix("p6i0", "p2i0", [0, "Rad Pro Desktop PC", "", "", -1, -1, 0, "RadProDownloads.aspx", "_self", "", "Download the desktop version of this site for free!"], 250, 18);
+    stm_aix("p6i1", "p2i0", [0, "Rad Pro PDA", "", "", -1, -1, 0, "RadProPDA.aspx", "_self", "", "Download the Pocket PC and Smartphone versions of some of the calculators for free!  Software by Rad Pro Calculator Software Development."], 250, 18);
+    stm_aix("p6i2", "p2i0", [0, "Cumulative Probability Plot", "", "", -1, -1, 0, "Probability.aspx", "_self", "", "Useful statistical plotting desktop software for free! Software by R. J. Tuttle, Brian Oliver PhD and Rad Pro Calculator Software Development."], 250, 18);   
+    stm_aix("p6i4", "p2i0", [0, "GeoConvert for GPS", "", "", -1, -1, 0, "GeoConvert.aspx", "_self", "", "Convert decimal degrees to DMS and vice versa.  Software by Rad Pro Calculator Software Development."], 250, 18);
+    stm_aix("p6i5", "p2i0", [0, "RadLab Software", "", "", -1, -1, 0, "RadLab.aspx", "_blank", "", " Radlab is an open source, free software, allowing the user to create and simulate much of the radiation detection and measurement experiments.With radlab users can do gamma, neutron, alpha and beta experiments. Software by Dagistan Sahin.  Offsite link. "], 250, 18);
+    stm_ep();
+    stm_aix("p0i4", "p0i2", [0, "Rad Pro Information"], 80, 23);
+    stm_bpx("p7", "p6", []);
+    stm_aix("p7i0", "p2i0", [0, "Useful Links", "", "", -1, -1, 0, "NuclearLinks.aspx", "_self", "", "Other nuclear sites, math and resource links."], 150, 18);   
+    //stm_aix("p7i2", "p2i0", [0, "Contact Us", "", "", -1, -1, 0, "Request.aspx", "_self", "", "Report bugs, request information, ask questions or just say hi or report how you like the software and site."], 150, 18);
+    //stm_aix("p7i3", "p2i0", [0, "Join Mailing List", "", "", -1, -1, 0, "MailingList.aspx", "_self", "", "Sign up to get the news of updates on the fast track."], 150, 18);
+    stm_aix("p7i4", "p2i0", [0, "Site Map", "", "", -1, -1, 0, "SiteMap.aspx", "_self", "", "All the site navigation links spread out."], 150, 18);
+    stm_aix("p7i5", "p2i0", [0, "Reference List", "", "", -1, -1, 0, "Files/References.pdf", "_blank"], 150, 18);
+    stm_aix("p7i6", "p2i0", [0, "Disclaimer", "", "", -1, -1, 0, "Files/Disclaimer.pdf", "_blank", "", "Legal stuff."], 150, 18);
+    stm_ep();
+    stm_aix("p0i5", "p0i2", [0, "Documents"], 80, 23);
+    stm_bpx("p8", "p6", []);
+    stm_aix("p8i0", "p2i0", [0, "Software Review", "", "", -1, -1, 0, "http://www.ionactive.co.uk/pdfs/Ionactive_Radiation_Protection_newsletter_January_2007.pdf", "_blank", "", "Review that sometimes reads like a tutorial."], 250, 18);
+    stm_aix("p8i1", "p7i5", [0, "Desktop Version Revision History", "", "", -1, -1, 0, "Files/RadProCalculatorUpdates.pdf"], 250, 18);
+    stm_aix("p8i2", "p7i5", [0, "Pocket PC Version Revision History", "", "", -1, -1, 0, "Files/RadProCalculatorPocketPC.pdf"], 250, 18);
+    stm_aix("p8i3", "p7i5", [0, "Shielding Formulas and Buildup Explained", "", "", -1, -1, 0, "Files/ShieldingandBuildup.pdf"], 250, 18);
+    //stm_aix("p8i4", "p7i5", [0, "Uranium Enrichment Formulas", "", "", -1, -1, 0, "Files/Enrichment.pdf"], 250, 18);
+    stm_aix("p8i5", "p2i0", [0, "Smartphone Version Choice", "", "", -1, -1, 0, "Files/SmartphoneVersion.pdf", "_blank", "", "Which version should you install on your smart phone?"], 250, 18);
+    stm_ep();
+    stm_aix("p0i6", "p0i2", [0, "Help"], 80, 23);
+    stm_bpx("p9", "p6", []);
+    stm_aix("p9i0", "p2i0", [0, "Rad Pro Desktop Version Help File", "", "", -1, -1, 0, "Files/RadProCalculatorDesktopHelp.pdf", "_blank", "", "The complete help file from the desktop version of Rad Pro Calculator."], 250, 18);
+    stm_aix("p9i1", "p2i0", [0, "Frequently Asked Questions (FAQ)", "", "", -1, -1, 0, "FAQ.aspx", "_self", "", "Before you send a question, read here to see if we have already answered it."], 250, 18);
+    stm_aix("p9i2", "p2i0", [0, "Probability Plot Full Help File", "", "", -1, -1, 0, "Files/ProbabilityPlot.pdf", "_blank", "", "The complete help file from the desktop software."], 250, 18);    
+    stm_ep();
+    stm_ep();
+    stm_em();
+//-->
+</script>
+
+
+
+
+    
+</div>
+</DIV>
+
+&nbsp;&nbsp;&nbsp;
+<div id="CalculatorHeader1_Panel2" style="height:11px;width:752px;text-align:center;z-index: 100; left: 40px;
+    position: absolute; top: 137px">
+	
+
+    <span id="CalculatorHeader1_Label1" style="font-size:9pt;">For those needing portability, Rad Pro for Desktop works with Windows 8.1/10 tablets.  Will not work with Surface tablets running Windows RT.</span>
+
+
+</div>
+    
+
+
+    
+
+			
+		&nbsp;
+            <div id="Panel3" style="background-color:#D1D8F3;border-color:#5D5EBB;border-style:Double;top: 160px; left: 40px; position: absolute; height: 327px; width: 732px; z-index: 0">
+	
+    
+</div>
+    
+        
+        
+       
+     
+        <div id="UpdatePanel1">
+	
+        <select name="cboElement" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;cboElement\&#39;,\&#39;\&#39;)&#39;, 0)" id="cboElement" style="font-family:Verdana;font-size:XX-Small;height:24px;width:160px;Z-INDEX: 114; LEFT: 61px; POSITION: absolute; TOP: 225px">
+		<option selected="selected" value="Actinium (Ac)">Actinium (Ac)</option>
+		<option value="Americium (Am)">Americium (Am)</option>
+		<option value="Antimony (Sb)">Antimony (Sb)</option>
+		<option value="Argon (Ar)">Argon (Ar)</option>
+		<option value="Arsenic (As)">Arsenic (As)</option>
+		<option value="Astatine (At)">Astatine (At)</option>
+		<option value="Barium (Ba)">Barium (Ba)</option>
+		<option value="Beryllium (Be)">Beryllium (Be)</option>
+		<option value="Bismuth (Bi)">Bismuth (Bi)</option>
+		<option value="Bromine (Br)">Bromine (Br)</option>
+		<option value="Cadmium (Cd)">Cadmium (Cd)</option>
+		<option value="Calcium (Ca)">Calcium (Ca)</option>
+		<option value="Californium (Cf)">Californium (Cf)</option>
+		<option value="Carbon (C)">Carbon (C)</option>
+		<option value="Cerium (Ce)">Cerium (Ce)</option>
+		<option value="Cesium (Cs)">Cesium (Cs)</option>
+		<option value="Chlorine (Cl)">Chlorine (Cl)</option>
+		<option value="Chromium (Cr)">Chromium (Cr)</option>
+		<option value="Cobalt (Co)">Cobalt (Co)</option>
+		<option value="Copper (Cu)">Copper (Cu)</option>
+		<option value="Curium (Cm)">Curium (Cm)</option>
+		<option value="Dysprosium (Dy)">Dysprosium (Dy)</option>
+		<option value="Erbium (Er)">Erbium (Er)</option>
+		<option value="Europium (Eu)">Europium (Eu)</option>
+		<option value="Fluorine (F)">Fluorine (F)</option>
+		<option value="Gadolinium (Gd)">Gadolinium (Gd)</option>
+		<option value="Gallium (Ga)">Gallium (Ga)</option>
+		<option value="Germanium (Ge)">Germanium (Ge)</option>
+		<option value="Gold (Au)">Gold (Au)</option>
+		<option value="Holmium (Ho)">Holmium (Ho)</option>
+		<option value="Hydrogen (H)">Hydrogen (H)</option>
+		<option value="Indium (In)">Indium (In)</option>
+		<option value="Iodine (I)">Iodine (I)</option>
+		<option value="Iridium (Ir)">Iridium (Ir)</option>
+		<option value="Iron (Fe)">Iron (Fe)</option>
+		<option value="Krypton (Kr)">Krypton (Kr)</option>
+		<option value="Lanthanium (La)">Lanthanium (La)</option>
+		<option value="Lead (Pb)">Lead (Pb)</option>
+		<option value="Lutetium (Lu)">Lutetium (Lu)</option>
+		<option value="Manganese (Mn)">Manganese (Mn)</option>
+		<option value="Molybdenum (Mo)">Molybdenum (Mo)</option>
+		<option value="Neptunium (Np)">Neptunium (Np)</option>
+		<option value="Nickel (Ni)">Nickel (Ni)</option>
+		<option value="Niobium (Nb)">Niobium (Nb)</option>
+		<option value="Nitrogen (N)">Nitrogen (N)</option>
+		<option value="Osmium (Os)">Osmium (Os)</option>
+		<option value="Oxygen (O)">Oxygen (O)</option>
+		<option value="Palladium (Pd)">Palladium (Pd)</option>
+		<option value="Phosphorous (P)">Phosphorous (P)</option>
+		<option value="Plutonium (Pu)">Plutonium (Pu)</option>
+		<option value="Polonium (Po)">Polonium (Po)</option>
+		<option value="Potassium (K)">Potassium (K)</option>
+		<option value="Praseodymium (Pr)">Praseodymium (Pr)</option>
+		<option value="Promethium (Pm)">Promethium (Pm)</option>
+		<option value="Protoactinium (Pa)">Protoactinium (Pa)</option>
+		<option value="Radium (Ra)">Radium (Ra)</option>
+		<option value="Radon (Rn)">Radon (Rn)</option>
+		<option value="Rhenium (Re)">Rhenium (Re)</option>
+		<option value="Rhodium (Rh)">Rhodium (Rh)</option>
+		<option value="Rubidium (Rb)">Rubidium (Rb)</option>
+		<option value="Ruthenium (Ru)">Ruthenium (Ru)</option>
+		<option value="Samarium (Sm)">Samarium (Sm)</option>
+		<option value="Scandium (Sc)">Scandium (Sc)</option>
+		<option value="Selenium (Se)">Selenium (Se)</option>
+		<option value="Silver (Ag)">Silver (Ag)</option>
+		<option value="Sodium (Na)">Sodium (Na)</option>
+		<option value="Strontium (Sr)">Strontium (Sr)</option>
+		<option value="Sulfur (S)">Sulfur (S)</option>
+		<option value="Tantalum (Ta)">Tantalum (Ta)</option>
+		<option value="Technectium (Tc)">Technectium (Tc)</option>
+		<option value="Tellurium (Te)">Tellurium (Te)</option>
+		<option value="Terbium (Tb)">Terbium (Tb)</option>
+		<option value="Thallium (Tl)">Thallium (Tl)</option>
+		<option value="Thorium (Th)">Thorium (Th)</option>
+		<option value="Thullium (Tm)">Thullium (Tm)</option>
+		<option value="Tin (Sn)">Tin (Sn)</option>
+		<option value="Tungsten (W)">Tungsten (W)</option>
+		<option value="Uranium (U)">Uranium (U)</option>
+		<option value="Xenon (Xe)">Xenon (Xe)</option>
+		<option value="Yittrium (Y)">Yittrium (Y)</option>
+		<option value="Ytterbium (Yb)">Ytterbium (Yb)</option>
+		<option value="Zinc (Zn)">Zinc (Zn)</option>
+		<option value="Zirconium (Zr)">Zirconium (Zr)</option>
+
+	</select>
+        
+        				
+				<select name="cboIsotopes" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;cboIsotopes\&#39;,\&#39;\&#39;)&#39;, 0)" id="cboIsotopes" style="font-family:Verdana;font-size:XX-Small;height:24px;width:126px;Z-INDEX: 207; LEFT: 261px; POSITION: absolute; TOP: 225px">
+		<option value="Ac-225">Ac-225</option>
+		<option selected="selected" value="Ac-227">Ac-227</option>
+		<option value="Ac-228">Ac-228</option>
+		<option value="Ac-225">Ac-225</option>
+		<option value="Ac-227">Ac-227</option>
+		<option value="Ac-228">Ac-228</option>
+
+	</select>
+        <input name="txtAnswer" type="text" readonly="readonly" id="txtAnswer" style="background-color:#E3E8F9;font-family:Verdana;font-size:XX-Small;font-weight:normal;height:24px;width:182px;Z-INDEX: 117; LEFT: 365px; POSITION: absolute; TOP: 385px" />
+        
+        <input name="txtOrigDate" type="text" id="txtOrigDate" tabindex="1" style="font-family:Verdana;font-size:XX-Small;font-weight:normal;height:24px;width:200px;Z-INDEX: 124; LEFT: 61px; POSITION: absolute; TOP: 337px" />
+        
+        <input name="txtCalcDate" type="text" id="txtCalcDate" tabindex="2" style="font-family:Verdana;font-size:XX-Small;font-weight:normal;height:24px;width:216px;Z-INDEX: 122; LEFT: 365px; POSITION: absolute; TOP: 337px" />
+        
+        
+        
+        
+        
+				<span id="lblHLife" style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:6px;width:116px;Z-INDEX: 108; LEFT: 189px; POSITION: absolute; TOP: 289px">Years</span>
+			
+         
+			
+			
+        <input name="txtHLife" type="text" value="21.773" id="txtHLife" tabindex="4" style="font-family:Verdana;font-size:XX-Small;font-weight:normal;height:24px;width:118px;Z-INDEX: 112; LEFT: 61px; POSITION: absolute; TOP: 281px" />
+       
+            <span id="lblElementSelect" style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:16px;width:136px;z-index: 127; left: 61px; position: absolute;
+                top: 209px">Select Element</span>
+        <span id="lblIsotopeSelect" style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:16px;width:136px;Z-INDEX: 119; POSITION: absolute; left: 261px; TOP: 209px">Select Isotope</span>
+            
+            
+            
+           
+        
+        
+        <span id="lblActivityUnits" style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:6px;width:140px;Z-INDEX: 110; LEFT: 189px; POSITION: absolute; TOP: 393px; right: 438px;">cpm</span>
+            <span id="lblOutputUnits" style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:2px;width:174px;Z-INDEX: 109; LEFT: 557px; POSITION: absolute; TOP: 393px">cpm</span>
+        <input type="button" name="cmdPickCalc" value="Pick" onclick="javascript:__doPostBack(&#39;cmdPickCalc&#39;,&#39;&#39;)" id="cmdPickCalc" style="color:SteelBlue;font-family:Verdana;font-weight:bold;height:22px;width:52px;Z-INDEX: 106; LEFT: 589px; POSITION: absolute; TOP: 345px" />
+        <input type="button" name="cmdPickOrig" value="Pick" onclick="javascript:__doPostBack(&#39;cmdPickOrig&#39;,&#39;&#39;)" id="cmdPickOrig" style="color:SteelBlue;font-family:Verdana;font-weight:bold;height:22px;width:52px;Z-INDEX: 107; LEFT: 277px; POSITION: absolute; TOP: 345px; right: 438px;" />
+        <span id="Label6" style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:4px;width:62px;Z-INDEX: 111; LEFT: 61px; POSITION: absolute; TOP: 265px">Half Life</span><span id="Label5" style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:16px;width:132px;Z-INDEX: 113; LEFT: 453px; POSITION: absolute; TOP: 209px">Select Units</span>
+				
+				<select name="cboActivityUnits2" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;cboActivityUnits2\&#39;,\&#39;\&#39;)&#39;, 0)" id="cboActivityUnits2" style="font-size:XX-Small;height:24px;width:126px;Z-INDEX: 114; LEFT: 453px; POSITION: absolute; TOP: 225px">
+		<option selected="selected" value="cpm">cpm</option>
+		<option value="dpm">dpm</option>
+		<option value="pCi">pCi</option>
+		<option value="nCi">nCi</option>
+		<option value="uCi">uCi</option>
+		<option value="mCi">mCi</option>
+		<option value="Ci">Ci</option>
+		<option value="Bq">Bq</option>
+		<option value="kBq">kBq</option>
+		<option value="MBq">MBq</option>
+		<option value="GBq">GBq</option>
+		<option value="TBq">TBq</option>
+		<option value="cpm">cpm</option>
+		<option value="dpm">dpm</option>
+		<option value="pCi">pCi</option>
+		<option value="nCi">nCi</option>
+		<option value="uCi">uCi</option>
+		<option value="mCi">mCi</option>
+		<option value="Ci">Ci</option>
+		<option value="Bq">Bq</option>
+		<option value="kBq">kBq</option>
+		<option value="MBq">MBq</option>
+		<option value="GBq">GBq</option>
+		<option value="TBq">TBq</option>
+
+	</select>
+				
+				<span id="Label4" style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:4px;width:110px;Z-INDEX: 115; LEFT: 365px; POSITION: absolute; TOP: 369px">Calculated Activity</span><span id="Label2" style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:6px;width:94px;Z-INDEX: 116; LEFT: 61px; POSITION: absolute; TOP: 369px">Original Activity</span><input name="txtOrigAct" type="text" id="txtOrigAct" tabindex="3" style="font-family:Verdana;font-size:XX-Small;font-weight:normal;height:24px;width:118px;Z-INDEX: 118; LEFT: 61px; POSITION: absolute; TOP: 385px" />
+        <span id="lblError2" style="display:inline-block;font-family:Verdana;font-size:Small;font-weight:bold;height:14px;Z-INDEX: 120; LEFT: 315px; POSITION: absolute; TOP: 168px; width: 276px;">Decay Calculations</span><span id="lblNew" style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:6px;width:208px;Z-INDEX: 121; LEFT: 365px; POSITION: absolute; TOP: 321px">Calculation Date and/or Time</span><span id="lblOriginal" style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:6px;width:208px;Z-INDEX: 123; LEFT: 64px; POSITION: absolute; TOP: 319px">Original Date and/or Time</span><input type="submit" name="cmdCalculate" value="Calculate" id="cmdCalculate" style="color:SteelBlue;font-family:Verdana;font-weight:bold;height:24px;width:126px;Z-INDEX: 125; LEFT: 253px; POSITION: absolute; TOP: 432px" />
+                <span style="display:inline-block;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:16px;width:144px;Z-INDEX: 130; LEFT: 205px; POSITION: absolute; TOP: 257px"><input id="chkOther" type="checkbox" name="chkOther" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;chkOther\&#39;,\&#39;\&#39;)&#39;, 0)" /><label for="chkOther">Isotope Not Listed?</label></span>
+        
+            
+                
+                
+			
+            &nbsp;&nbsp;
+        
+</div>        
+    
+         <a id="HyperLink2" title="Description and formula" href="http://www.ehs.washington.edu/rso/calculator/chelpdk.shtm" target="_blank" style="display:inline-block;font-family:Verdana;font-size:XX-Small;height:16px;width:117px;z-index: 100;
+                    left: 639px; position: absolute; top: 461px">Radioactive Decay</a>
+			
+            &nbsp;&nbsp; 
+           
+            
+				
+        
+            
+            
+            <div style="display: inline; font-weight: normal; font-size: 7pt; z-index: 137; left: 27px;
+                width: 702px; color: #F1EBE4; font-family: Verdana; position: absolute; top: 675px;
+                height: 181px; text-align: left">
+               
+                    
+                        Useful for calculating today's activity for any
+                        radioactive isotope. You may also back decay sources to find out the original activity (or for any date), knowing the current activity. If the isotope that you wish to decay
+                        is not on the drop down list, check the 'not listed' check-box and manually enter the isotope name and
+                        its half-life to perform the calculation. You may enter date or time or a combination
+                        of both. Calendar pickers are included for date entry convenience.
+            </div>
+            &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp;&nbsp; <input type="submit" name="Button2" value="About the Decay Calculator" id="Button2" style="color:SteelBlue;font-family:Verdana;font-size:XX-Small;font-weight:bold;height:24px;width:187px;Z-INDEX: 132; LEFT: 418px; POSITION: absolute; TOP: 432px" />
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+            
+            
+            
+            
+            
+            <!-- Start of StatCounter Code -->
+<script type="text/javascript">
+sc_project=3546775; 
+sc_invisible=1; 
+sc_partition=39; 
+sc_security="eb02ab58"; 
+</script>
+
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c40.statcounter.com/3546775/0/eb02ab58/1/" alt="hitcounter" /></a></div></noscript>
+<!-- End of StatCounter Code -->
+            
+        <p>
+        
+            </p>
+            
+        
+<script language='javascript' type='text/javascript'>
+<!--
+MetaBuilders_FirstFocus_Focus('txtOrigDate', 'txtOrigDate');
+// -->
+</script></form>
+	</body>
+</HTML>

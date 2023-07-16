@@ -1,0 +1,465 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+<!-- Mirrored from www.radprocalculator.com/Probability.aspx by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 May 2023 11:34:36 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><link rel="stylesheet" type="text/css" href="DXR91f0.css?r=1_66,1_67,1_68,1_283,1_280-mJSri" /><title>
+	RPC: Statistics Freeware: ProbPlot 3.0 Download (Formerly Cumulative Probability Plot) 
+</title><meta http-equiv="X-UA-Compatible" content="chrome=1" /><meta name="keywords" content="freeware,probability, cumulative probability, data analysis, regulatory limits, metrics, tolerance, data interpretation" /><meta name="description" content="ProbPlot 3.0 does all of the statistical mathematics for you and it outputs the data in a visual format that can be easily interpreted by people with a limited knowledge of statistics.  The graph is also useful for a quick demonstration to regulators or other interested parties that your product or process is within acceptable tolerance or meets regulatory limits." /><link rel="stylesheet" href="http://www.radprocalculator.com/CSS/Links.css" type="text/css" /><link href="StyleSheet.css" rel="stylesheet" type="text/css" /><link rel="stylesheet" href="http://www.radprocalculator.com/Files/CSS/explorer.css" /><meta content="JavaScript" name="vs_defaultClientScript" /><link rel="shortcut icon" href="RadPro.ico" /><link rel="stylesheet" href="http://www.radprocalculator.com/CSS/PageLinks.css" type="text/css" /></head>
+<body background="http://www.radprocalculator.com/Images/pagebkg2009.jpg">
+    <form name="form1" method="post" action="http://www.radprocalculator.com/Probability.aspx" id="form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMjA0MzQzNDY0OQ9kFgICAw9kFgICCQ9kFgQCAQ9kFgRmDw8WBB4IQ3NzQ2xhc3MFD2FjY29yZGlvbkhlYWRlch4EXyFTQgICZGQCAQ8PFgQfAAUQYWNjb3JkaW9uQ29udGVudB8BAgIWAh4Fc3R5bGUFDWRpc3BsYXk6bm9uZTtkAgIPZBYEZg8PFgQfAAUPYWNjb3JkaW9uSGVhZGVyHwECAmRkAgEPDxYEHwAFEGFjY29yZGlvbkNvbnRlbnQfAQICFgIfAgUNZGlzcGxheTpub25lO2QYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgIFDEltYWdlQnV0dG9uMQUMSW1hZ2VCdXR0b24yJI0Jx8T+VWyUS+SRRpOUWjWv0WoRj3O8qtcsy2bZ700=" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="WebResource52be.html?d=WT33pTT2GiD9YqLHKKY22-WwnKHUS_KxLPwN2mEymLrRCdrfZe_OWjrx8IWgH-LApYR8LrPRpzVoYXSfbFODOyyNBmt_pOfuJzO3AhxRNFE1&amp;t=637100518460000000" type="text/javascript"></script>
+
+
+<script src="ScriptResource53de.html?d=jQef98vCYitJVL0h6mi5HQPHme0tVFScj3y_9CJwNcQ4tJJly2QrqgCbkf3DbebBN-GhXRE-1SxjthSZkQMhdb-AvHk-BKkzkpk4VVEgIjgGIcVIifENKUfhhIUNRCpG202tPcIbolFIyQz4bkQZdw2&amp;t=f2cd5c5" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side framework failed to load.');
+//]]>
+</script>
+
+<script src="ScriptResource2d8b.html?d=tAj0rXyX01yyYFMdIeAFBUTYvNifDjp6oC2xzALXUobCnc0fg7Z_Qumz1F6Owqeq084QVlpCr9-4LilBl-Oyv2w-RlgvXGfB7jMIiGjY-rmP24rrx9ivrUVBD73EACj5AmCrxFDEwW-9AF5neY-wXg2&amp;t=f2cd5c5" type="text/javascript"></script>
+<script src="ScriptResourcebb10.html?d=OIKpz3-eS34mRt_U7MJnpUgsFClzB0J5bD-PW285zAeZY6qFuQJbr88DwBY8nP4CgyR5RGpcm7MlTw2w8UqxROomBVa44cJR8oEm_9VneM_WMC_zQIZo8XHloLJHX8_3vhCtQ4Fkis_jpv0Pnj3Zig2&amp;t=f2cd5c5" type="text/javascript"></script>
+<script src="ScriptResourceebb3.html?d=Ec3Vd9mjw6dPMd6pPISrNgaW5eeZ_MVr11TcjM3g4bAA7zauiMP4wfvUKtO6-_y7sevPJfb-vIe_EZm_0UclD8URQHcGlMCnBu48smcrqz_1hITD6CfA6_k5BMZBNl9xsFQm-EXiC55XhdOioxkQbw2&amp;t=f2cd5c5" type="text/javascript"></script>
+<script src="ScriptResourcea6be.html?d=xoWWMjuR3rldlaqjzPOGfL_6l_kX5gBsbypb8QcHZMSKKig5SWZ7S8hMfHBeE6usconO_FQInHZyC5Xrs25sq7uNa_wzYvmppfiBLy6ft9rvSWbV7Kp2k-YKaV3600kg2fEDutSus8h7_qG_flhGyg2&amp;t=f2cd5c5" type="text/javascript"></script>
+<script src="ScriptResource9d81.html?d=fzEjfJ60jWRZjjYwQPMrnv8Ii-iBTfkx7aSpq1FdMPbjJQNRAYtIN9dtQUrXKlwHU9Y7jkcvGmYsSGksrONYZnEzgHCkb_Nqqe2CN4XNDkrQ4sFQ2rwuzwgMrv3bG7ILct1ZtzgUKFzP7ii98lhi4w2&amp;t=f2cd5c5" type="text/javascript"></script>
+<script src="ScriptResourcebcd3.html?d=ZU4W9bmNqeYM_L4MRcm_kUGqHpdOJj2-xupIHbtbENcUin6oJjd0kSEY9wWoAYBkJfr41E7qkmTM4iYsX9srJv91xX5LW3vte9WOGE395fM70W82c92tlic7_RYhi43A45AmnFERqpjaPU6OU-pcs2ydJjhBJfy3ZDQPcf3n-qQ1&amp;t=f2cd5c5" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="8EF0672C" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAVoC3OE3PS2KTBTJZXvfehp3BxEnReEmQ0eoFMBdv7GDR9RnCGAb8O/3BS7J5w/wBTpkAKvHlFmeWUpJ6tT4i4qYs1X7aZmCc4CU0bkNVODWwkgOXq4Kqgb1SywVIWqF1xwAim/89uoOiWzh1igCEXz" />
+</div>
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager1', 'form1', [], [], [], 90, '');
+//]]>
+</script>
+
+    <div>
+        
+
+
+<head>
+
+<meta name="google-site-verification" content="6Y2U8e5MXiN5ffSUBMytxx6-ZQqbb3-MT-kMFXxzflg" />
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-17223493-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+<script type="text/javascript" language="JavaScript1.2" src="js/stmenu.js"></script>
+</head>
+
+   
+<script type="text/javascript" language="javascript">ERRunSWFContent = 0;</script>
+<script type="text/javascript" src="ERRunSWFContent.js" language="javascript"></script>
+
+	<div id="CalculatorHeader1_Panel20" style="height:98px;width:768px;z-index: 1; left: 46px;
+            position: absolute; top: 8px">
+	
+       
+     	
+	
+
+        <script id="dxis_784268246" src="DXR0abd.axd?r=1_62-mJSri" type="text/javascript"></script><img class="dxeImage dxe-loadingImage" id="CalculatorHeader1_ASPxImage1" onload="ASPx.ASPxImageLoad.OnLoad(this,&#39;&#39;,0,&#39;&#39;)" onabort="ASPx.ASPxImageLoad.OnLoad(this,&#39;&#39;,0,&#39;&#39;)" onerror="ASPx.ASPxImageLoad.OnLoad(this,&#39;&#39;,0,&#39;&#39;)" src="http://www.radprocalculator.com/Images/RadProHeader.jpg" alt="" />
+ 
+        
+</div>
+        &nbsp; &nbsp; &nbsp;
+        
+    <p>
+         
+
+    &nbsp;<DIV style="BORDER-RIGHT: #cc00ff thick; BORDER-TOP: #cc00ff thick; BORDER-LEFT: #cc00ff thick; WIDTH: 754px; COLOR: #3366cc; BORDER-BOTTOM: #cc00ff thick; HEIGHT: 98px; left: 40px; top: 24px; z-index: 101; position: absolute;">
+      
+         <script type="text/javascript" src="js/stmenu.js"></script> 
+        &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+    <div id="CalculatorHeader1_Panel1" style="height:21px;width:751px;text-align:left;z-index: 102; left: 15px;
+        position: relative; top: 67px">
+	
+  
+<script type="text/javascript" language="JavaScript1.2">
+<!--
+    stm_bm(["menu61b2", 730, "MenuImages", "blank.html", 0, "", "", 0, 0, 250, 0, 1000, 1, 1, 0, "", "540", 0, 0, 1, 2, "default", "hand", "js/"], this);
+    stm_bp("p0", [0, 4, 0, 0, 0, 4, 0, 16, 100, "", -2, "", -2, 90, 0, 0, "#999999", "transparent", "", 3, 0, 0, "#E6FAB4 #788C32 #788C32 #E6FAB4"]);
+    stm_ai("p0i0", [0, "Site Navigation Menu", "", "", -1, -1, 0, "", "_self", "", "", "", "", 0, 0, 0, "", "", 0, 0, 0, 0, 1, "#5D5EBB", 0, "#5D5EBB", 0, "", "", 3, 3, 1, 1, "#BEE6F0 #64878C #64878C #BEE6F0", "#64878C #BEE6F0 #BEE6F0 #64878C", "#FFFFFF", "#FFFFFF", "bold 8pt Arial", "bold 8pt Arial", 0, 0], 80, 23);
+    stm_aix("p0i1", "p0i0", [0, "Home Page", "", "", -1, -1, 0, "default.aspx", "_self", "", "", "", "", 0, 0, 0, "", "", 0, 0, 0, 0, 1, "#9DACE6", 0, "#D1D8F3", 0, "", "", 3, 3, 1, 1, "#BEE6F0 #64878C #64878C #BEE6F0", "#64878C #BEE6F0 #BEE6F0 #64878C", "#333366", "#333366"], 80, 23);
+    stm_aix("p0i2", "p0i1", [0, "Online Calculators", "", "", -1, -1, 0, "", "_self", "", "", "", "", 0, 0, 0, "0604scroll2ldlalr.html", "0604scroll2ldlalr.html", 16, 9], 80, 23);
+    stm_bp("p1", [1, 4, 0, 0, 0, 4, 0, 16, 100, "", -2, "", -2, 58, 0, 0, "#999999", "transparent", "", 3, 0, 0, "#000000"]);
+    stm_aix("p1i0", "p0i2", [0, "Dose-Rate"], 250, 18);
+    stm_bpx("p2", "p1", [1, 2, 0, 0, 0, 4, 0, 0]);
+    stm_aix("p2i0", "p0i0", [0, "Gamma Activity to Dose-Rate With Shielding", "", "", -1, -1, 0, "Gamma.aspx", "_self", "", "", "", "", 0, 0, 0, "", "", 0, 0, 0, 0, 1, "#E3E8F9", 0, "#D1D8F3", 0, "", "", 3, 3, 1, 1, "#FFFFFF #A0A0A0 #A0A0A0 #FFFFFF", "#A0A0A0 #FFFFFF #FFFFFF #A0A0A0", "#4B4B4B", "#000000", "8pt Arial", "8pt Arial"], 250, 18);
+    stm_aix("p2i1", "p2i0", [0, "Beta Activity to Dose-Rate", "", "", -1, -1, 0, "Beta.aspx"], 250, 18);
+    stm_aix("p2i2", "p2i0", [0, "Bremsstrahlung (Beta Shielding)", "", "", -1, -1, 0, "Bremsstrahlung.aspx"], 250, 18);
+    stm_aix("p2i3", "p2i0", [0, "X-ray Devices Dose-Rate", "", "", -1, -1, 0, "XRay.aspx"], 250, 18);
+    stm_aix("p2i4", "p2i0", [0, "ALARA Calculations", "", "", -1, -1, 0, "ALARA.aspx"], 250, 18);
+    stm_aix("p2i5", "p2i0", [0, "Inverse Square Law", "", "", -1, -1, 0, "InverseSquare.aspx"], 250, 18);
+    stm_ep();
+    stm_aix("p1i1", "p2i0", [0, "Radiological Units Conversions", "", "", -1, -1, 0, "Conversion.aspx"], 250, 18);
+    stm_aix("p1i2", "p0i2", [0, "Decay Calculations"], 250, 18);
+    stm_bpx("p3", "p2", []);
+    stm_aix("p3i0", "p2i0", [0, "Decay (New Activity)", "", "", -1, -1, 0, "Decay.aspx"], 150, 18);
+    stm_aix("p3i1", "p2i0", [0, "Half-Life Calculator", "", "", -1, -1, 0, "HalfLife.aspx"], 150, 18);
+    stm_aix("p3i2", "p2i0", [0, "Timed Decay", "", "", -1, -1, 0, "TimedDecay.aspx", "_self", "", "New!!! How long does it take for an isotope to decay to a specified activity and on what date does it reach that activity?"], 150, 18);
+    stm_ep();
+    stm_aix("p1i3", "p0i2", [0, "Uranium Calculations"], 250, 18);
+    stm_bpx("p4", "p2", []);
+    //stm_aix("p4i0", "p2i0", [0, "Enrichment", "", "", -1, -1, 0, "UraniumEnrichment.aspx"], 150, 18);
+    //stm_aix("p4i1", "p2i0", [0, "Fuel Loading", "", "", -1, -1, 0, "UraniumFuel.aspx"], 150, 18);
+    stm_aix("p4i2", "p2i0", [0, "Specific Activity", "", "", -1, -1, 0, "Grams.aspx"], 150, 18);
+    stm_ep();
+    stm_aix("p1i4", "p0i2", [0, "MDC/MDA"], 250, 18);
+    stm_bpx("p5", "p2", []);
+    stm_aix("p5i0", "p2i0", [0, "Scaler/Static", "", "", -1, -1, 0, "ScalerMDC.aspx"], 150, 18);
+    stm_aix("p5i1", "p2i0", [0, "Scanner/Frisker", "", "", -1, -1, 0, "ScanMDC.aspx"], 150, 18);
+    stm_ep();
+    stm_ep();
+    stm_aix("p0i3", "p0i2", [0, "Freeware"], 80, 23);
+    stm_bpx("p6", "p2", [1, 4]);
+    stm_aix("p6i0", "p2i0", [0, "Rad Pro Desktop PC", "", "", -1, -1, 0, "RadProDownloads.aspx", "_self", "", "Download the desktop version of this site for free!"], 250, 18);
+    stm_aix("p6i1", "p2i0", [0, "Rad Pro PDA", "", "", -1, -1, 0, "RadProPDA.aspx", "_self", "", "Download the Pocket PC and Smartphone versions of some of the calculators for free!  Software by Rad Pro Calculator Software Development."], 250, 18);
+    stm_aix("p6i2", "p2i0", [0, "Cumulative Probability Plot", "", "", -1, -1, 0, "Probability.aspx", "_self", "", "Useful statistical plotting desktop software for free! Software by R. J. Tuttle, Brian Oliver PhD and Rad Pro Calculator Software Development."], 250, 18);   
+    stm_aix("p6i4", "p2i0", [0, "GeoConvert for GPS", "", "", -1, -1, 0, "GeoConvert.aspx", "_self", "", "Convert decimal degrees to DMS and vice versa.  Software by Rad Pro Calculator Software Development."], 250, 18);
+    stm_aix("p6i5", "p2i0", [0, "RadLab Software", "", "", -1, -1, 0, "RadLab.aspx", "_blank", "", " Radlab is an open source, free software, allowing the user to create and simulate much of the radiation detection and measurement experiments.With radlab users can do gamma, neutron, alpha and beta experiments. Software by Dagistan Sahin.  Offsite link. "], 250, 18);
+    stm_ep();
+    stm_aix("p0i4", "p0i2", [0, "Rad Pro Information"], 80, 23);
+    stm_bpx("p7", "p6", []);
+    stm_aix("p7i0", "p2i0", [0, "Useful Links", "", "", -1, -1, 0, "NuclearLinks.aspx", "_self", "", "Other nuclear sites, math and resource links."], 150, 18);   
+    //stm_aix("p7i2", "p2i0", [0, "Contact Us", "", "", -1, -1, 0, "Request.aspx", "_self", "", "Report bugs, request information, ask questions or just say hi or report how you like the software and site."], 150, 18);
+    //stm_aix("p7i3", "p2i0", [0, "Join Mailing List", "", "", -1, -1, 0, "MailingList.aspx", "_self", "", "Sign up to get the news of updates on the fast track."], 150, 18);
+    stm_aix("p7i4", "p2i0", [0, "Site Map", "", "", -1, -1, 0, "SiteMap.aspx", "_self", "", "All the site navigation links spread out."], 150, 18);
+    stm_aix("p7i5", "p2i0", [0, "Reference List", "", "", -1, -1, 0, "Files/References.pdf", "_blank"], 150, 18);
+    stm_aix("p7i6", "p2i0", [0, "Disclaimer", "", "", -1, -1, 0, "Files/Disclaimer.pdf", "_blank", "", "Legal stuff."], 150, 18);
+    stm_ep();
+    stm_aix("p0i5", "p0i2", [0, "Documents"], 80, 23);
+    stm_bpx("p8", "p6", []);
+    stm_aix("p8i0", "p2i0", [0, "Software Review", "", "", -1, -1, 0, "http://www.ionactive.co.uk/pdfs/Ionactive_Radiation_Protection_newsletter_January_2007.pdf", "_blank", "", "Review that sometimes reads like a tutorial."], 250, 18);
+    stm_aix("p8i1", "p7i5", [0, "Desktop Version Revision History", "", "", -1, -1, 0, "Files/RadProCalculatorUpdates.pdf"], 250, 18);
+    stm_aix("p8i2", "p7i5", [0, "Pocket PC Version Revision History", "", "", -1, -1, 0, "Files/RadProCalculatorPocketPC.pdf"], 250, 18);
+    stm_aix("p8i3", "p7i5", [0, "Shielding Formulas and Buildup Explained", "", "", -1, -1, 0, "Files/ShieldingandBuildup.pdf"], 250, 18);
+    //stm_aix("p8i4", "p7i5", [0, "Uranium Enrichment Formulas", "", "", -1, -1, 0, "Files/Enrichment.pdf"], 250, 18);
+    stm_aix("p8i5", "p2i0", [0, "Smartphone Version Choice", "", "", -1, -1, 0, "Files/SmartphoneVersion.pdf", "_blank", "", "Which version should you install on your smart phone?"], 250, 18);
+    stm_ep();
+    stm_aix("p0i6", "p0i2", [0, "Help"], 80, 23);
+    stm_bpx("p9", "p6", []);
+    stm_aix("p9i0", "p2i0", [0, "Rad Pro Desktop Version Help File", "", "", -1, -1, 0, "Files/RadProCalculatorDesktopHelp.pdf", "_blank", "", "The complete help file from the desktop version of Rad Pro Calculator."], 250, 18);
+    stm_aix("p9i1", "p2i0", [0, "Frequently Asked Questions (FAQ)", "", "", -1, -1, 0, "FAQ.aspx", "_self", "", "Before you send a question, read here to see if we have already answered it."], 250, 18);
+    stm_aix("p9i2", "p2i0", [0, "Probability Plot Full Help File", "", "", -1, -1, 0, "Files/ProbabilityPlot.pdf", "_blank", "", "The complete help file from the desktop software."], 250, 18);    
+    stm_ep();
+    stm_ep();
+    stm_em();
+//-->
+</script>
+
+
+
+
+    
+</div>
+</DIV>
+
+&nbsp;&nbsp;&nbsp;
+<div id="CalculatorHeader1_Panel2" style="height:11px;width:752px;text-align:center;z-index: 100; left: 40px;
+    position: absolute; top: 137px">
+	
+
+    <span id="CalculatorHeader1_Label1" style="font-size:9pt;">For those needing portability, Rad Pro for Desktop works with Windows 8.1/10 tablets.  Will not work with Surface tablets running Windows RT.</span>
+
+
+</div>
+    
+
+
+    
+
+
+    
+    </div>
+        &nbsp;&nbsp;
+        <div id="Panel3" style="background-color:#D1D8F3;border-color:#5D5EBB;border-style:Double;top: 148px; left: 22px; position: absolute; height: 1292px; width: 951px; z-index: 0">
+	
+    
+</div>
+        <input type="button" name="cmdCPP" value="Download Now!" onclick="javascript:__doPostBack(&#39;cmdCPP&#39;,&#39;&#39;)" id="cmdCPP" title=" 9 MEG download" style="color:SteelBlue;font-family:Verdana;font-size:XX-Small;font-weight:bold;width:216px;z-index: 100; left: 682px; position: absolute;
+            top: 257px" />
+        <div style="display: inline; z-index: 109; left: 124px; width: 750px; color: #000000;
+            position: absolute; top: 416px; height: 42px">
+            <span style="font-size: 8pt"><span style="font-size: 8pt; font-family: Verdana"></span>
+            </span>
+           <div id="Accordion1" tabindex="-1" style="background-color:Transparent;">
+	<input type="hidden" name="Accordion1_AccordionExtender_ClientState" id="Accordion1_AccordionExtender_ClientState" value="-1" /><div id="AccordionPane1_header" class="accordionHeader">
+		<a href="#" class="accordionLink">1. General Software Description for Laymen    (click on these title bars to expand and collapse the text)</a>
+	</div><div id="AccordionPane1_content" class="accordionContent" style="display:none;">
+		
+           <p>There are many uses for this software in the world of data interpretation.  If you are a manufacturer and need to test the quality of your product, 
+           the tests may destroy the product, so it is not possible to test 100% of the products.  If you are a dairy, the laboratory tests of the milk for microbes and fat content 
+           make the tested milk undrinkable, so if you were to test all of the milk, there would be none left to sell to the public.  In this case, you must sample a percentage of the milk and 
+           interpret the data from the tests in a way that insures that all of the milk bottled at the time meets the regulator's and your quality standards.  If the tests for quality 
+           are nondestructive, then it may be too expensive and time consuming to test 100%, so you are in need of statistical analysis of data from sampling of a small portion of the lot.
+           </p>
+           <p>ProbPlot 3.0 (formerly Cumulative Probability Plot) is a useful tool for these purposes.  Not only does it do all of the statistical mathematics for you, it outputs the data in a visual format that can be 
+           easily interpreted by people with a limited knowledge of statistics.  The graph is also useful for a quick demonstration to regulators or other interested parties that
+           your product or process is within acceptable tolerance or meets regulatory limits. </p>
+           
+           <p>If you are releasing a nuclear site under MARSSIM, you will still find the ProbPlot graphs a useful addition to your final status survey report to visually demonstrate that your site is clean.  This is important 
+           for interested parties who do not understand the complexities of MARSSIM and are not statistics experts, such as members of the public who are your neighbors.  Many regulators also appreciate how the graphs reinforce the results 
+           of your MARSSIM conclusions about meeting the DQO.  </p>
+           
+           <p>One look at a ProbPlot graph can tell the same story as all of the other report sections and paragraphs do in words (1 picture = 1000 words or every picture tells a story).  For nuclear final status surveys, it can also help you detect a faulty survey instrument.  For instance, if
+           an instrument has a cable that is going bad, it may only malfunction occasionally when moved around during the survey, but may be fine when sitting still during background and source checks which may be performed 3 times a day.  One look at the graph would tell you something is wrong with the data.  Also
+           if your cleanup effort was not thorough, the shape of the graph will tell you that with one glance.</p>  
+           
+           <p>If most of the survey or sample points are below the release limit and only a few places are above, you will get the expected straight line but the outlier points will stand out on the graph.  If 
+           a few points are far enough out to affect the shape of the expected straight line on the graph, the software allows you to eliminate those few data points a see how the graph looks without them.  This can tell you how just cleaning up those few small hot spots will make the probability that your site is 
+           below release limits increase.
+           </p>
+           <p>The software is also useful for looking at very large datasets.  A manufacturer may test their product and look at the data on a weekly or monthly basis, but it may also be useful for them to 
+           look at the data from several years or even several decades.  If you try to look at statistical mathematical output from 10,000 or more data points, it may be difficult to interpret.  ProbPlot
+            allows you to look at over 65,000 data points on one graph, which can tell you a story about your data instantly, with one look at the graph.</p>  
+            
+            <p>You can easily get the data into the software by copying it from a spreadsheet and pasting it into ProbPlot or by importing a comma separated value (.CSV) file.  After selecting options for the graph, 
+           you may then copy the graph to your clipboard as a picture and paste it into a word processor such as Word or presentation software such as Power Point.
+           </p>
+           <p>The software was first developed to demonstrate to regulators and the public that nuclear facilities were clean below regulatory limits after decommissioning (now called remediation).  
+           Today, there is a guidance document in the US called MARSSIM (Multi-Agency Radiation Survey and Site Investigation Manual) that is the accepted standard for statistical tests to demonstrate 
+           that the Data Quality Objective (DQO) has been met for a nuclear facility remediation effort.  Back in the late 1970s and early 1980s MARSSIM did not exist nor was there any written regulatory guidance for release of former nuclear 
+           facilities.  Each decommissioning project had to come up with their own way of statistically proving the facility was clean and have the plan approved by the overseeing agency.</p>  
+           
+           <p>Robert J. Tuttle was the manager of Radiation and Nuclear Safety (aka Health Physics, aka Radiation Protection) and a statistics expert for Atomics International (AI) during that time period.  He developed ProbPlot as a tool to help demonstrate that 
+           decommissioned AI research nuclear reactors and nuclear fuel fabrication facilities were releasable for future non-nuclear use.  When the Windows operating system was released in the early 1990s, Brian Oliver, PH.D. 
+           took the Tuttle FORTRAN code for MSDOS and rewrote it with a graphical user interface for MS Windows.  That version was 16 bit and when Windows 2000 was released, shortly after the new millennium, the software did not work on all Windows 2000 machines. We
+           took the 16 bit version and rewrote it for 32 bit machines and also added new enhancements such as the ability to resize and rotate the graph before copy and paste or print, the ability to change the  graph fonts, expanding the data input to over 65,000 points and adding a help system.</p> 
+           
+            <p>Version 3.0 of ProbPlot was recently tested on 64 bit versions of Windows Vista and Windows 7, using the WOW 32 bit mode, in conjunction with Office 2007.  Everything works just as it does on older operating systems with the exception of the Help system.  The
+           first time you open the Help file in Vista or Windows 7, a window pops up with a link to Microsoft to download and install a help reader file that you need that does not ship with those operating systems.  Once you install this file, the help system works
+           as expected.
+          </p>
+           <p>
+           
+           Remember, ProbPlot is not just for nuclear site release.  It is also useful for looking at any related data such as business metrics, the brightness of stars in far away galaxies, or tolerance measurements of complex parts coming off of an assembly line.
+             </p>
+            
+	</div><div id="AccordionPane2_header" class="accordionHeader">
+		<a href="#" class="accordionLink">2. Software Description for Those With Statistics Experience and Knowledge</a>
+	</div><div id="AccordionPane2_content" class="accordionContent" style="display:none;">
+		
+                 
+            <span style="font-size: 8pt"><span style="font-size: 8pt; font-family: Verdana"></span>
+            </span>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                &nbsp;This section is an excerpt from the Help file included with the software.  This program is designed
+                    to interpret the results of a sampling inspection, for the purpose of judging compliance
+                    with chosen limits. It may also be
+                    used to identify outlying values or departure from the assumed (Gaussian or Student’s-t)
+                    distribution. Uncertainties for the
+                    individual values may be entered, and a mean and standard deviation for the set
+                    are calculated. The statistical test
+                    is based on a selection of the "Consumer’s Risk" (CR) and the "Lot Tolerance Percent
+                    Defective" (LTPD), so that the stringency of the test may be adjusted. Typical values are CR=0.1 and LTPD=10%. More stringent tests may be made by choice of smaller values of the CR and
+                    LTPD. Confidence limits for the fitted
+                    distribution may be plotted for identification of outlying points, values that do
+                    not fit in the distribution.
+            </p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                &nbsp;</p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                Statistical analysis is used to convert a large amount of data into a manageable
+                amount of understandable information.
+                This process can involve a variety of techniques, the simplest being to determine
+                the average (or mean) value for a given
+                set of data.
+                This simple determination
+                is improved upon by also calculating the standard deviation of the data about the
+                mean, which gives an estimate of the variability of the data.
+                In many cases, this variability represents variations both in the characteristics
+                or values being measured and in measurement technique fluctuations.
+            </p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                &nbsp;</p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                The significance of
+                    these quantities (mean and standard deviation) depends upon the distribution assumed
+                    for the data. Sometimes there is a
+                    theoretically known distribution for a particular measurement process, such as the
+                    binominal, or Poisson distribution for counting radioactivity. These distributions are relatively well approximated by the Gaussian, or
+                    normal, distribution. In fact, the
+                    Gaussian distribution approximates the distribution of many different kinds of measurements
+                    and for simplicity is generally assumed to be the proper distribution. The Gaussian distribution is generally seen in the form of a bell-shaped
+                    curve, with most values occurring near the mean value and fewer and fewer values
+                    existing at increasing distances from the mean, both greater and less than the mean.
+            </p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                &nbsp;</p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                However, it is difficult
+                    to derive the bell-shaped curve from experimental data unless the data are specifically
+                    selected to demonstrate the curve, and deviations from the distribution are difficult
+                    to see. A better version is the so-called
+                    "cumulative probability function" utilized in this program, which forms an S-shaped
+                    curve when plotted in the usual manner.
+                    This can be further improved by adjusting the abscissa (the "X" values in an X-Y
+                    graph) so that the "S" curve becomes a straight line.
+                This is a standard statistical technique and is the basis for special graph
+                    paper used for probability analysis of data.
+                    The parameters of the Gaussian distribution (the mean and the standard deviation)
+                    are determined by the usual calculational methods.
+            </p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                &nbsp;</p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                Where the data are
+                    not well-represented by a Gaussian distribution (and this is true in most cases)
+                    the departure is readily apparent; the data points do not lie along a straight line
+                    representing the Gaussian distribution.
+                    In most cases, this departure takes a single typical form. Much of the data lies along the theoretical straight line, with a few points
+                    at either extreme lying somewhat above it.
+                    This form can usually be interpreted as showing a large number of uncontaminated
+                    measurements where the variability is due to random fluctuations in the measurements
+                    themselves, with the balance being locations that harbor more or less residual contamination.
+            </p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                &nbsp;</p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                If the contaminated area is large, there will be many points departing from the
+                curve. In these cases, the points will not fit the theoretical straight line.
+                If most of the region in question is contaminated, the distribution will be dominated
+                by the contaminated data points, in a line of points generally sloping from the
+                lower left to the upper right, fitting more or less closely, a theoretical straight
+                line.
+            </p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                &nbsp;</p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                This program is used
+                    to provide a sampling inspection test.
+                    It uses a standard quality control technique called inspection by variables, in
+                    which the distribution of the measured values is used to predict the probability
+                    that other unmeasured values would exceed a specified limit. The standard test method requires calculating the mean and the standard deviation-(s). Then, depending the values chosen for
+                    certain parameters that reflect the performance of the test in accepting bad lots,
+                    or rejecting good lots, the necessary number of samples is determined and a multiplier,
+                    k, is computed so that the inequality mean + ks &lt; U where U is the acceptance limit, representing
+                    an acceptable lot. The parameters used in the program to calculate
+                the multiplier
+                    are the CR and LTPD This value of mean
+                    + ks, that is compared to the limit is what is called the Test Statistic, or Ts. The value of Ts is a point near the
+                    upper end of the observed data distribution.
+                    If this value is less than the acceptance limit U, the lot has passed the Sampling
+                    Inspection by Variables Test, according to the criteria chosen for CR and LTPD.
+            </p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                &nbsp;</p>
+            <p class="MsoNormal" style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana">
+                The usual manner of
+                    applying this inspection method is to use tables giving the value of the sample
+                    size (N) and multiplier (k) for the selected values of CR and LTPD. The program uses the number of measured values (N) in the lot to compute
+                    k, and this value is used to calculate mean + ks.
+            </p>
+        
+                
+	</div>
+</div>
+        </div>
+        <div style="display: inline; z-index: 110; left: 51px; width: 125px; color: #000000;
+            position: absolute; top: 512px; height: 17px">
+            <span style="font-size: 8pt"><span style="font-size: 8pt; font-family: Verdana"></span>
+            </span>
+           
+        </div>
+        <br />
+        <div 
+        
+        
+        style="display: inline; font-weight: bold; font-size: medium; z-index: 106;
+            left: 447px; width: 91px; color: #000000; position: absolute; top: 155px; height: 19px">
+            <span style="font-size: 8pt"><span style="font-size: 8pt; font-family: Verdana"></span>
+            </span>
+            <p class="MsoNormal" 
+                style="font-size: small; margin: 0in 0in 0pt; font-family: Verdana; width: 181px;">
+                ProbPlot 3.0</p>
+        </div>
+        <div style="display: inline; z-index: 107; left: 256px; width: 422px; color: #000000;
+            position: absolute; top: 177px; height: 17px">
+            <span style="font-size: 8pt"><span style="font-size: 8pt; font-family: Verdana"></span>
+            </span>
+            <center><p class="MsoNormal" 
+                    style="font-size: 8pt; margin: 0in 0in 0pt; font-family: Verdana; width: 451px;">
+                &nbsp;Programmed by Robert J. Tuttle,
+                    Brian Oliver, PH.D. and Rad Pro Software Team, MIT</p></center>
+        </div>
+        
+       
+        <p>
+            <input type="image" name="ImageButton1" id="ImageButton1" title="Small dataset with error bars" src="http://www.radprocalculator.com/Images/th_SamplePlot.jpg" style="height:170px;width:255px;border-width:0px;z-index: 102; left: 402px; position: absolute; top: 201px" />
+            &nbsp;</p>
+        <div style="display: inline; z-index: 108; left: 265px; width: 254px; color: #000000;
+            position: absolute; top: 377px; height: 17px">
+            <span style="font-size: 8pt"><span style="font-size: 8pt; font-family: Verdana"></span>
+            </span>
+            <p class="MsoNormal" style="font-weight: bold; font-size: 8pt; margin: 0in 0in 0pt;
+                font-family: Verdana">
+                Sample Plots.&nbsp; Click Images to Enlarge</p>
+        </div>
+        <a id="HyperLink1" href="Files/ProbabilityPlot.pdf" target="_blank" style="display:inline-block;font-family:Verdana;font-size:X-Small;width:244px;z-index: 103; left: 668px; position: absolute;
+            top: 295px">Click to View Entire Help File, With Formulas</a>
+        <input type="image" name="ImageButton2" id="ImageButton2" title="Large dataset with no error bars." src="http://www.radprocalculator.com/Images/th_SamplePlot2.jpg" style="height:170px;width:243px;border-width:0px;z-index: 104; left: 141px; position: absolute; top: 201px" />
+            
+            <!-- Start of StatCounter Code -->
+<script type="text/javascript">
+sc_project=3546775; 
+sc_invisible=1; 
+sc_partition=39; 
+sc_security="eb02ab58"; 
+</script>
+
+<script type="text/javascript" src="../www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c40.statcounter.com/3546775/0/eb02ab58/1/" alt="hitcounter" /></a></div></noscript>
+<!-- End of StatCounter Code -->
+
+    
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.AccordionBehavior, {"ClientStateFieldID":"Accordion1_AccordionExtender_ClientState","FramesPerSecond":40,"HeaderCssClass":"accordionHeader","HeaderSelectedCssClass":"accordionHeaderSelected","SelectedIndex":-1,"id":"Accordion1_AccordionExtender","requireOpenedPane":false,"suppressHeaderPostbacks":true}, null, null, $get("Accordion1"));
+});
+//]]>
+</script>
+</form>
+</body>
+
+<!-- Mirrored from www.radprocalculator.com/Probability.aspx by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 May 2023 11:34:42 GMT -->
+</html>
